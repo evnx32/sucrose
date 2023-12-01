@@ -4,7 +4,7 @@
 
 import 'dart:convert';
 
-import 'xendit_card_channel_properties.dart';
+import 'channel_properties/xendit_card_channel_properties.dart';
 
 XenditCard xenditCardFromJson(String str) =>
     XenditCard.fromJson(json.decode(str));
