@@ -5,7 +5,7 @@
 import 'dart:convert';
 
 import 'package:sucrose/src/xendit/enums/enums.dart';
-import 'package:sucrose/src/xendit/models/entity/xendit_customer.dart';
+import 'package:sucrose/src/xendit/models/entity/xendit_invoice_customer.dart';
 import 'package:sucrose/src/xendit/models/request/request_payment/xendit_payment_method_request.dart';
 
 import '../../entity/xendit_metadata.dart';
@@ -23,7 +23,7 @@ class XenditRequestPayment {
   final String? description;
   final XenditMetadata? metadata;
   final String? customerId;
-  final XenditCustomer? customer;
+  final XenditInvoiceCustomer? customer;
 
   XenditRequestPayment({
     required this.amount,
@@ -44,7 +44,7 @@ class XenditRequestPayment {
         customerId: json["customer_id"],
         customer: json["customer"] == null
             ? null
-            : XenditCustomer.fromJson(json["customer"]),
+            : XenditInvoiceCustomer.fromJson(json["customer"]),
         metadata: json["metadata"] == null
             ? null
             : XenditMetadata.fromJson(json["metadata"]),
