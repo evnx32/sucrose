@@ -1,6 +1,6 @@
 import 'dart:convert';
-import 'package:sucrose/src/xendit/models/entity/xendit_customer.dart';
-import 'package:sucrose/src/xendit/models/entity/xendit_item.dart';
+import 'package:sucrose/src/xendit/models/entity/xendit_invoice_customer.dart';
+import 'package:sucrose/src/xendit/models/entity/xendit_invoice_item.dart';
 import '../../entity/xendit_customer_notification_preference.dart';
 import '../../entity/xendit_fee.dart';
 
@@ -17,12 +17,12 @@ class XenditInvoiceRequest {
   final String payerEmail;
   final int? invoiceDuration;
   final String? callbackVirtualAccountId;
-  final XenditCustomer? customer;
+  final XenditInvoiceCustomer? customer;
   final XenditCustomerNotificationPreference? customerNotificationPreference;
   final String? successRedirectUrl;
   final String? failureRedirectUrl;
   final String? currency;
-  final List<XenditItem> items;
+  final List<XenditInvoiceItem> items;
   final List<XenditFee>? fees;
 
   XenditInvoiceRequest({
@@ -50,7 +50,7 @@ class XenditInvoiceRequest {
         payerEmail: json["payer_email"],
         customer: json["customer"] == null
             ? null
-            : XenditCustomer.fromJson(json["customer"]),
+            : XenditInvoiceCustomer.fromJson(json["customer"]),
         customerNotificationPreference:
             json["customer_notification_preference"] == null
                 ? null
@@ -61,8 +61,8 @@ class XenditInvoiceRequest {
         currency: json["currency"],
         items: json["items"] == null
             ? []
-            : List<XenditItem>.from(
-                json["items"]!.map((x) => XenditItem.fromJson(x))),
+            : List<XenditInvoiceItem>.from(
+                json["items"]!.map((x) => XenditInvoiceItem.fromJson(x))),
         fees: json["fees"] == null
             ? []
             : List<XenditFee>.from(
