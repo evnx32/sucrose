@@ -1,8 +1,13 @@
 import 'dart:convert';
 
+import 'package:sucrose/src/xendit/models/entity/xendit_customer.dart';
 import 'package:sucrose/src/xendit/models/request/invoice/xendit_invoice_request.dart';
 import 'package:sucrose/src/xendit/models/request/request_payment/ewallet/xendit_ewallet_request.dart';
 import 'package:sucrose/src/xendit/models/request/request_payment/virtual_account/xendit_virtual_account_request.dart';
+import 'package:sucrose/src/xendit/models/response/customer/xendit_customer_response.dart';
+import 'package:sucrose/src/xendit/models/response/general/xendit_list_payment_method_response.dart';
+import 'package:sucrose/src/xendit/models/response/general/xendit_list_payment_request_response.dart';
+import 'package:sucrose/src/xendit/models/response/general/xendit_payment_method_by_id_response.dart';
 import 'package:sucrose/src/xendit/models/response/general/xendit_payment_request_by_id_response.dart';
 import 'package:sucrose/src/xendit/models/response/invoice/xendit_invoice_response.dart';
 import 'package:sucrose/src/xendit/models/response/request_payment/xendit_request_payment_response.dart';
@@ -135,6 +140,7 @@ class XenditHttpRequest {
     }
   }
 
+  /// Ewallet One Time Payment
   Future<XenditRequestPaymentResponse> createEwalletOTPPaymentRequest(
       XenditEwalletRequest data) async {
     logger.i(jsonEncode(data.toJson()));
@@ -174,6 +180,95 @@ class XenditHttpRequest {
           },
         ),
       );
+    }
+  }
+
+  /// Get List of Payment Request
+  Future<XenditListPaymentRequestResponse> getListPaymentRequest() async {
+    try {
+      Response response = await dio.get(
+        endpoint.getListPaymentRequest(),
+      );
+      return XenditListPaymentRequestResponse.fromJson(response.data);
+    } on DioException catch (e) {
+      logger.e("$TAG: ${e.response!.data}");
+      rethrow;
+    } catch (e) {
+      return Future.error(
+        XenditException(
+          {
+            "message": e.toString(),
+          },
+        ),
+      );
+    }
+  }
+
+  Future<XenditPaymentMethodByIdResponse> getMethodPaymentById(
+      String id) async {
+    try {
+      Response response = await dio.get(
+        endpoint.getPaymentMethod(id),
+      );
+      return XenditPaymentMethodByIdResponse.fromJson(response.data);
+    } on DioException catch (e) {
+      logger.e("$TAG: ${e.response!.data}");
+      rethrow;
+    } catch (e) {
+      logger.e("$TAG: ${e.toString()}");
+      rethrow;
+      // return Future.error(
+      //   XenditException(
+      //     {
+      //       "message": e.toString(),
+      //     },
+      //   ),
+      // );
+    }
+  }
+
+  Future<XenditListPaymentMethodResponse> getListMethodPayment() async {
+    try {
+      Response response = await dio.get(endpoint.getListPaymentMethod());
+      return XenditListPaymentMethodResponse.fromJson(response.data);
+    } on DioException catch (e) {
+      logger.e("$TAG: ${e.response!.data}");
+      rethrow;
+    } catch (e) {
+      logger.e("$TAG: ${e.toString()}");
+      rethrow;
+      // return Future.error(
+      //   XenditException(
+      //     {
+      //       "message": e.toString(),
+      //     },
+      //   ),
+      // );
+    }
+  }
+
+  Future<XenditCustomerResponse> createCustomer(XenditCustomer customer) async {
+    try {
+      Response response = await dio.post(
+        endpoint.createCustomer(),
+        data: jsonEncode(
+          customer.toJson(),
+        ),
+      );
+      return XenditCustomerResponse.fromJson(response.data);
+    } on DioException catch (e) {
+      logger.e("$TAG: ${e.response!.data}");
+      rethrow;
+    } catch (e) {
+      logger.e("$TAG: ${e.toString()}");
+      rethrow;
+      // return Future.error(
+      //   XenditException(
+      //     {
+      //       "message": e.toString(),
+      //     },
+      //   ),
+      // );
     }
   }
 }
