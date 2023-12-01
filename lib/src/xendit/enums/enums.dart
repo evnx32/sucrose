@@ -101,3 +101,43 @@ enum XenditCurrency {
   MYR, // Malaysia Ringgit
   USD, // United States Dollar
 }
+
+enum XenditCustomerType {
+  INDIVIDUAL,
+  BUSINESS,
+}
+
+enum XenditCustomerGender { MALE, FEMALE, OTHER }
+
+enum XenditBusinessType {
+  CORPORATION,
+  SOLE_PROPRIETOR,
+  PARTNERSHIP,
+  COOPERATIVE,
+  TRUST,
+  NON_PROFIT,
+  GOVERNMENT
+}
+
+enum XenditKycDocumentType {
+  BIRTH_CERTIFICATE,
+  BANK_STATEMENT,
+  DRIVING_LICENSE,
+  IDENTITY_CARD,
+  PASSPORT,
+  VISA,
+  BUSINESS_REGISTRATION,
+  BUSINESS_LICENSE
+}
+
+enum XenditAdressesCategory { HOME, WORK, PROVINCIAL }
+
+enum XenditIdentityAccountType {
+  BANK_ACCOUNT,
+  EWALLET,
+  CREDIT_CARD,
+  PAY_LATER,
+  OTC,
+  QR_CODE,
+  SOCIAL_MEDIA
+}
