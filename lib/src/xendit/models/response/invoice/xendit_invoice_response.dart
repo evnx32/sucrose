@@ -1,6 +1,6 @@
 import 'dart:convert';
-import 'package:sucrose/src/xendit/models/entity/xendit_customer.dart';
-import 'package:sucrose/src/xendit/models/entity/xendit_item.dart';
+import 'package:sucrose/src/xendit/models/entity/xendit_invoice_customer.dart';
+import 'package:sucrose/src/xendit/models/entity/xendit_invoice_item.dart';
 
 import '../../entity/xendit_customer_notification_preference.dart';
 import '../../entity/xendit_fee.dart';
@@ -35,9 +35,9 @@ class XenditInvoiceResponse {
   final DateTime? created;
   final DateTime? updated;
   final String? currency;
-  final List<XenditItem>? items;
+  final List<XenditInvoiceItem>? items;
   final List<XenditFee>? fees;
-  final XenditCustomer? customer;
+  final XenditInvoiceCustomer? customer;
   final XenditCustomerNotificationPreference? customerNotificationPreference;
 
   XenditInvoiceResponse({
@@ -119,15 +119,15 @@ class XenditInvoiceResponse {
         currency: json["currency"],
         items: json["items"] == null
             ? []
-            : List<XenditItem>.from(
-                json["items"]!.map((x) => XenditItem.fromJson(x))),
+            : List<XenditInvoiceItem>.from(
+                json["items"]!.map((x) => XenditInvoiceItem.fromJson(x))),
         fees: json["fees"] == null
             ? []
             : List<XenditFee>.from(
                 json["fees"]!.map((x) => XenditFee.fromJson(x))),
         customer: json["customer"] == null
             ? null
-            : XenditCustomer.fromJson(json["customer"]),
+            : XenditInvoiceCustomer.fromJson(json["customer"]),
         customerNotificationPreference:
             json["customer_notification_preference"] == null
                 ? null
