@@ -7,8 +7,9 @@ import 'dart:convert';
 import 'package:sucrose/src/xendit/models/entity/channel_properties/xendit_channel_properties.dart';
 import 'package:sucrose/src/xendit/models/entity/xendit_actions.dart';
 import 'package:sucrose/src/xendit/models/entity/xendit_item.dart';
+import 'package:sucrose/src/xendit/models/entity/xendit_metadata.dart';
+import 'package:sucrose/src/xendit/models/entity/xendit_payment_method.dart';
 import 'package:sucrose/src/xendit/models/entity/xendit_shipping_information.dart';
-import 'package:sucrose/sucrose.dart';
 
 XenditListPaymentRequestResponse xenditListPaymentRequestResponseFromJson(
         String str) =>
