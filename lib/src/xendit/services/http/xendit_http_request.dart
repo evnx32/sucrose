@@ -19,31 +19,31 @@ import 'package:logger/logger.dart';
 import '../../models/request/request_payment/qr/xendit_qr_request.dart';
 
 class XenditHttpRequest {
-  String TAG = "XenditHttpRequest";
+  String tag = "XenditHttpRequest";
 
   // init singleton
 
   Dio dio = Dio();
 
-  XenditHttpRequest.init(String apiKey) {
-    dio.interceptors.add(LogInterceptor(
-      request: true,
-      responseBody: true,
-      requestBody: true,
-      requestHeader: true,
-      responseHeader: true,
-    ));
+  XenditHttpRequest.init(String apiKey, {bool debug = false}) {
+    if (debug) {
+      dio.interceptors.add(LogInterceptor(
+        request: true,
+        responseBody: true,
+        requestBody: true,
+        requestHeader: true,
+        responseHeader: true,
+      ));
 
-    dio.interceptors.add(
-      InterceptorsWrapper(
-        onRequest: (options, handler) {
-          logger.i("$TAG: ${options.headers}");
-          return handler.next(options);
-        },
-      ),
-    );
-
-    logger.i("$TAG: $apiKey");
+      dio.interceptors.add(
+        InterceptorsWrapper(
+          onRequest: (options, handler) {
+            logger.i("$tag: ${options.headers}");
+            return handler.next(options);
+          },
+        ),
+      );
+    }
 
     // add headers
     dio.options.headers["Authorization"] = apiKey;
@@ -67,8 +67,15 @@ class XenditHttpRequest {
       );
       return XenditInvoiceResponse.fromJson(response.data);
     } on DioException catch (e) {
-      logger.e("$TAG: ${e.response!.data}");
-      rethrow;
+      return Future.error(
+        DioException(
+            requestOptions: e.requestOptions,
+            response: e.response,
+            type: e.type,
+            error: {
+              "message": e.response!.data,
+            }),
+      );
     } catch (e) {
       return Future.error(
         XenditException(
@@ -88,8 +95,15 @@ class XenditHttpRequest {
       );
       return XenditInvoiceResponse.fromJson(response.data);
     } on DioException catch (e) {
-      logger.e("$TAG: ${e.response!.data}");
-      rethrow;
+      return Future.error(
+        DioException(
+            requestOptions: e.requestOptions,
+            response: e.response,
+            type: e.type,
+            error: {
+              "message": e.response!.data,
+            }),
+      );
     } catch (e) {
       return Future.error(
         XenditException(
@@ -112,11 +126,23 @@ class XenditHttpRequest {
       );
       return XenditRequestPaymentResponse.fromJson(response.data);
     } on DioException catch (e) {
-      logger.e("$TAG: ${e.response!.data}");
-      rethrow;
+      return Future.error(
+        DioException(
+            requestOptions: e.requestOptions,
+            response: e.response,
+            type: e.type,
+            error: {
+              "message": e.response!.data,
+            }),
+      );
     } catch (e) {
-      logger.e("$TAG: ${e.toString()}");
-      rethrow;
+      return Future.error(
+        XenditException(
+          {
+            "message": e.toString(),
+          },
+        ),
+      );
     }
   }
 
@@ -132,11 +158,23 @@ class XenditHttpRequest {
       );
       return XenditRequestPaymentResponse.fromJson(response.data);
     } on DioException catch (e) {
-      logger.e("$TAG: ${e.response!.data}");
-      rethrow;
+      return Future.error(
+        DioException(
+            requestOptions: e.requestOptions,
+            response: e.response,
+            type: e.type,
+            error: {
+              "message": e.response!.data,
+            }),
+      );
     } catch (e) {
-      logger.e("$TAG: ${e.toString()}");
-      rethrow;
+      return Future.error(
+        XenditException(
+          {
+            "message": e.toString(),
+          },
+        ),
+      );
     }
   }
 
@@ -151,11 +189,23 @@ class XenditHttpRequest {
       );
       return XenditRequestPaymentResponse.fromJson(response.data);
     } on DioException catch (e) {
-      logger.e("$TAG: ${e.response!.data}");
-      rethrow;
+      return Future.error(
+        DioException(
+            requestOptions: e.requestOptions,
+            response: e.response,
+            type: e.type,
+            error: {
+              "message": e.response!.data,
+            }),
+      );
     } catch (e) {
-      logger.e("$TAG: ${e.toString()}");
-      rethrow;
+      return Future.error(
+        XenditException(
+          {
+            "message": e.toString(),
+          },
+        ),
+      );
     }
   }
 
@@ -170,8 +220,15 @@ class XenditHttpRequest {
       );
       return XenditPaymentRequestByIdResponse.fromJson(response.data);
     } on DioException catch (e) {
-      logger.e("$TAG: ${e.response!.data}");
-      rethrow;
+      return Future.error(
+        DioException(
+            requestOptions: e.requestOptions,
+            response: e.response,
+            type: e.type,
+            error: {
+              "message": e.response!.data,
+            }),
+      );
     } catch (e) {
       return Future.error(
         XenditException(
@@ -191,8 +248,15 @@ class XenditHttpRequest {
       );
       return XenditListPaymentRequestResponse.fromJson(response.data);
     } on DioException catch (e) {
-      logger.e("$TAG: ${e.response!.data}");
-      rethrow;
+      return Future.error(
+        DioException(
+            requestOptions: e.requestOptions,
+            response: e.response,
+            type: e.type,
+            error: {
+              "message": e.response!.data,
+            }),
+      );
     } catch (e) {
       return Future.error(
         XenditException(
@@ -212,18 +276,23 @@ class XenditHttpRequest {
       );
       return XenditPaymentMethodByIdResponse.fromJson(response.data);
     } on DioException catch (e) {
-      logger.e("$TAG: ${e.response!.data}");
-      rethrow;
+      return Future.error(
+        DioException(
+            requestOptions: e.requestOptions,
+            response: e.response,
+            type: e.type,
+            error: {
+              "message": e.response!.data,
+            }),
+      );
     } catch (e) {
-      logger.e("$TAG: ${e.toString()}");
-      rethrow;
-      // return Future.error(
-      //   XenditException(
-      //     {
-      //       "message": e.toString(),
-      //     },
-      //   ),
-      // );
+      return Future.error(
+        XenditException(
+          {
+            "message": e.toString(),
+          },
+        ),
+      );
     }
   }
 
@@ -232,18 +301,23 @@ class XenditHttpRequest {
       Response response = await dio.get(endpoint.getListPaymentMethod());
       return XenditListPaymentMethodResponse.fromJson(response.data);
     } on DioException catch (e) {
-      logger.e("$TAG: ${e.response!.data}");
-      rethrow;
+      return Future.error(
+        DioException(
+            requestOptions: e.requestOptions,
+            response: e.response,
+            type: e.type,
+            error: {
+              "message": e.response!.data,
+            }),
+      );
     } catch (e) {
-      logger.e("$TAG: ${e.toString()}");
-      rethrow;
-      // return Future.error(
-      //   XenditException(
-      //     {
-      //       "message": e.toString(),
-      //     },
-      //   ),
-      // );
+      return Future.error(
+        XenditException(
+          {
+            "message": e.toString(),
+          },
+        ),
+      );
     }
   }
 
@@ -257,18 +331,23 @@ class XenditHttpRequest {
       );
       return XenditCustomerResponse.fromJson(response.data);
     } on DioException catch (e) {
-      logger.e("$TAG: ${e.response!.data}");
-      rethrow;
+      return Future.error(
+        DioException(
+            requestOptions: e.requestOptions,
+            response: e.response,
+            type: e.type,
+            error: {
+              "message": e.response!.data,
+            }),
+      );
     } catch (e) {
-      logger.e("$TAG: ${e.toString()}");
-      rethrow;
-      // return Future.error(
-      //   XenditException(
-      //     {
-      //       "message": e.toString(),
-      //     },
-      //   ),
-      // );
+      return Future.error(
+        XenditException(
+          {
+            "message": e.toString(),
+          },
+        ),
+      );
     }
   }
 }

@@ -9,8 +9,9 @@ class Sucrose {
   late XenditHttpRequest xendit;
 
   /// Initialize Xendit with Xendit API key
-  Sucrose.initXendit({required String xenditApiKey}) {
+  Sucrose.initXendit({required String xenditApiKey, bool debug = false}) {
     xendit = XenditHttpRequest.init(
-        "Basic ${base64.encode(utf8.encode("$xenditApiKey:"))}");
+        "Basic ${base64.encode(utf8.encode("$xenditApiKey:"))}",
+        debug: debug);
   }
 }
