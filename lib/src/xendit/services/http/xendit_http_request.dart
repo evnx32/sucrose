@@ -107,7 +107,7 @@ class XenditHttpRequest {
     logger.i(jsonEncode(data.toJson()));
     try {
       Response response = await dio.post(
-        endpoint.createPaymentRequest(),
+        endpoint.paymentRequest(),
         data: jsonEncode(data.toJson()),
       );
       return XenditRequestPaymentResponse.fromJson(response.data);
@@ -127,7 +127,7 @@ class XenditHttpRequest {
     logger.i(jsonEncode(data.toJson()));
     try {
       Response response = await dio.post(
-        endpoint.createPaymentRequest(),
+        endpoint.paymentRequest(),
         data: jsonEncode(data.toJson()),
       );
       return XenditRequestPaymentResponse.fromJson(response.data);
@@ -146,7 +146,7 @@ class XenditHttpRequest {
     logger.i(jsonEncode(data.toJson()));
     try {
       Response response = await dio.post(
-        endpoint.createPaymentRequest(),
+        endpoint.paymentRequest(),
         data: jsonEncode(data.toJson()),
       );
       return XenditRequestPaymentResponse.fromJson(response.data);
@@ -187,7 +187,7 @@ class XenditHttpRequest {
   Future<XenditListPaymentRequestResponse> getListPaymentRequest() async {
     try {
       Response response = await dio.get(
-        endpoint.getListPaymentRequest(),
+        endpoint.paymentRequest(),
       );
       return XenditListPaymentRequestResponse.fromJson(response.data);
     } on DioException catch (e) {
