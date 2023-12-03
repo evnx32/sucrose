@@ -56,8 +56,8 @@ enum XenditDirectDebitCode {
 enum XenditOTCCode {
   ALFAMART,
   INDOMARET,
-  SEVEN_ELEVEN,
-  SEVEN_ELEVEN_CLIQQ,
+  // SEVEN_ELEVEN,
+  // SEVEN_ELEVEN_CLIQQ,
   CEBUANA,
   ECPAY,
   PALAWAN,
