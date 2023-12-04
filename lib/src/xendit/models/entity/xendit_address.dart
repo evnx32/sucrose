@@ -25,11 +25,11 @@ class XenditAddress {
       );
 
   Map<String, dynamic> toJson() => {
-        "city": city,
-        "country": country,
-        "postal_code": postalCode,
-        "state": state,
-        "street_line1": streetLine1,
-        "street_line2": streetLine2,
+        if (city != null) "city": city,
+        if (country != null) "country": country,
+        if (postalCode != null) "postal_code": postalCode,
+        if (state != null) "state": state,
+        if (streetLine1 != null) "street_line1": streetLine1,
+        if (streetLine2 != null) "street_line2": streetLine2,
       };
 }

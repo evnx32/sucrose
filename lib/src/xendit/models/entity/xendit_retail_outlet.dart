@@ -2,7 +2,14 @@ import 'package:sucrose/src/xendit/enums/enums.dart';
 import 'package:sucrose/src/xendit/models/entity/channel_properties/xendit_retail_outlet_channel_properties.dart';
 
 class XenditRetailOutlet {
+  /// number Expected and accepted amount of the transaction in the actual value in the provided currency.
+  ///
+  /// If amount is not provided, the corresponding payment code will accept any amount as payment (open amount).
+  ///
+  /// so if you want to use OPEN amount, dont use this
   final int? amount;
+
+  /// ISO 4217 three-letter code of the transaction's currency. Will be auto-filled based on the channel_code if not provided.
   final int? currency;
   final XenditOTCCode? channelCode;
   final RetailOutletChannelProperties? channelProperties;

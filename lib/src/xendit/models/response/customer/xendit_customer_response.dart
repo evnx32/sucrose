@@ -1,5 +1,5 @@
 import 'package:sucrose/src/xendit/enums/enums.dart';
-import 'package:sucrose/src/xendit/models/entity/xendit_adresses.dart';
+import 'package:sucrose/src/xendit/models/entity/xendit_addresses.dart';
 import 'package:sucrose/src/xendit/models/entity/xendit_business_detail.dart';
 import 'package:sucrose/src/xendit/models/entity/xendit_individual_detail.dart';
 import 'package:sucrose/src/xendit/models/entity/xendit_kyc_document.dart';
@@ -22,7 +22,7 @@ class XenditCustomerResponse {
   final XenditMetadata? metadata;
   final XenditIndividualDetail? individualDetail;
   final XenditBusinessDetail? businessDetail;
-  final List<XenditAdresses>? addresses;
+  final List<XenditAddresses>? addresses;
   final List<XenditIdentityAccountType>? identityAccounts;
 
   XenditCustomerResponse({
@@ -75,7 +75,7 @@ class XenditCustomerResponse {
             : XenditBusinessDetail.fromJson(json["business_detail"]),
         addresses: json["addresses"] == null
             ? []
-            : List<XenditAdresses>.from(json["addresses"]!.map((x) => x)),
+            : List<XenditAddresses>.from(json["addresses"]!.map((x) => x)),
         identityAccounts: json["identity_accounts"] == null
             ? []
             : List<XenditIdentityAccountType>.from(
@@ -103,7 +103,7 @@ class XenditCustomerResponse {
         "business_detail": businessDetail?.toJson() ?? {},
         "addresses": addresses == null
             ? []
-            : List<XenditAdresses>.from(addresses!.map((x) => x)),
+            : List<XenditAddresses>.from(addresses!.map((x) => x)),
         "identity_accounts": identityAccounts == null
             ? []
             : List<XenditIdentityAccountType>.from(
