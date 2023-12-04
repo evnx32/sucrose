@@ -4,6 +4,9 @@
 
 import 'dart:convert';
 
+import 'package:sucrose/src/xendit/models/entity/xendit_item.dart';
+import 'package:sucrose/src/xendit/models/entity/xendit_metadata.dart';
+
 import '../../entity/xendit_payment_method.dart';
 
 XenditRequestPaymentResponse xenditQrResponseFromJson(String str) =>
@@ -21,7 +24,7 @@ class XenditRequestPaymentResponse {
   final String? referenceId;
   final XenditPaymentMethod? paymentMethod;
   final String? description;
-  final Metadata? metadata;
+  final XenditMetadata? metadata;
   final String? customerId;
   final String? captureMethod;
   final dynamic initiator;
@@ -33,7 +36,7 @@ class XenditRequestPaymentResponse {
   final dynamic failureCode;
   final dynamic channelProperties;
   final dynamic shippingInformation;
-  final dynamic items;
+  final List<XenditItem>? items;
 
   XenditRequestPaymentResponse({
     this.id,
@@ -73,7 +76,7 @@ class XenditRequestPaymentResponse {
         description: json["description"],
         metadata: json["metadata"] == null
             ? null
-            : Metadata.fromJson(json["metadata"]),
+            : XenditMetadata.fromJson(json["metadata"]),
         customerId: json["customer_id"],
         captureMethod: json["capture_method"],
         initiator: json["initiator"],
@@ -115,21 +118,5 @@ class XenditRequestPaymentResponse {
         "channel_properties": channelProperties,
         "shipping_information": shippingInformation,
         "items": items,
-      };
-}
-
-class Metadata {
-  final String? foo;
-
-  Metadata({
-    this.foo,
-  });
-
-  factory Metadata.fromJson(Map<String, dynamic> json) => Metadata(
-        foo: json["foo"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "foo": foo,
       };
 }

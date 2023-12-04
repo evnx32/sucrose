@@ -1,20 +1,11 @@
-// To parse this JSON data, do
-//
-//     final xenditRetailOutlet = xenditRetailOutletFromJson(jsonString);
-
-import 'dart:convert';
-
-XenditRetailOutlet xenditRetailOutletFromJson(String str) =>
-    XenditRetailOutlet.fromJson(json.decode(str));
-
-String xenditRetailOutletToJson(XenditRetailOutlet data) =>
-    json.encode(data.toJson());
+import 'package:sucrose/src/xendit/enums/enums.dart';
+import 'package:sucrose/src/xendit/models/entity/channel_properties/xendit_retail_outlet_channel_properties.dart';
 
 class XenditRetailOutlet {
   final int? amount;
-  final String? currency;
-  final String? channelCode;
-  final ChannelProperties? channelProperties;
+  final int? currency;
+  final XenditOTCCode? channelCode;
+  final RetailOutletChannelProperties? channelProperties;
 
   XenditRetailOutlet({
     this.amount,
@@ -27,43 +18,22 @@ class XenditRetailOutlet {
       XenditRetailOutlet(
         amount: json["amount"],
         currency: json["currency"],
-        channelCode: json["channel_code"],
+        channelCode: json["channel_code"] == null
+            ? null
+            : XenditOTCCode.values.firstWhere(
+                (element) => element.name == json["channel_code"],
+              ),
         channelProperties: json["channel_properties"] == null
             ? null
-            : ChannelProperties.fromJson(json["channel_properties"]),
+            : RetailOutletChannelProperties.fromJson(
+                json["channel_properties"]),
       );
 
   Map<String, dynamic> toJson() => {
-        "amount": amount,
-        "currency": currency,
-        "channel_code": channelCode,
-        "channel_properties": channelProperties?.toJson(),
-      };
-}
-
-class ChannelProperties {
-  final String? paymentCode;
-  final String? customerName;
-  final DateTime? expiresAt;
-
-  ChannelProperties({
-    this.paymentCode,
-    this.customerName,
-    this.expiresAt,
-  });
-
-  factory ChannelProperties.fromJson(Map<String, dynamic> json) =>
-      ChannelProperties(
-        paymentCode: json["payment_code"],
-        customerName: json["customer_name"],
-        expiresAt: json["expires_at"] == null
-            ? null
-            : DateTime.parse(json["expires_at"]),
-      );
-
-  Map<String, dynamic> toJson() => {
-        "payment_code": paymentCode,
-        "customer_name": customerName,
-        "expires_at": expiresAt?.toIso8601String(),
+        if (amount != null) "amount": amount,
+        if (currency != null) "currency": currency,
+        if (channelCode != null) "channel_code": channelCode!.name,
+        if (channelProperties != null)
+          "channel_properties": channelProperties!.toJson(),
       };
 }

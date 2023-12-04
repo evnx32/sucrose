@@ -44,7 +44,9 @@ class XenditIndividualDetail {
         nationality: json["nationality"],
         dateOfBirth: json["date_of_birth"],
         placeOfBirth: json["place_of_birth"],
-        gender: json["gender"],
+        gender: XenditCustomerGender.values.firstWhere(
+          (element) => element.name == json["gender"],
+        ),
         employment: json["employment"],
       );
 
