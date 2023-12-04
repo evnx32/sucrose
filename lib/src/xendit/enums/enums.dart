@@ -107,6 +107,11 @@ enum XenditCustomerType {
   BUSINESS,
 }
 
+enum XenditPaymentMethodStatus {
+  ACTIVE,
+  INACTIVE,
+}
+
 enum XenditCustomerGender { MALE, FEMALE, OTHER }
 
 enum XenditBusinessType {
@@ -141,3 +146,13 @@ enum XenditIdentityAccountType {
   QR_CODE,
   SOCIAL_MEDIA
 }
+
+enum XenditRefundReason {
+  FRAUDULENT,
+  DUPLICATE,
+  REQUESTED_BY_CUSTOMER,
+  CANCELLATION,
+  OTHERS
+}
+
+enum XenditRefundCurrency { IDR, PHP }
