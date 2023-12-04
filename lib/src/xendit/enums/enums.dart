@@ -156,3 +156,5 @@ enum XenditRefundReason {
 }
 
 enum XenditRefundCurrency { IDR, PHP }
+
+enum XenditReedemPoints { REDEEM_NONE, REDEEM_ALL }
