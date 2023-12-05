@@ -158,3 +158,70 @@ enum XenditRefundReason {
 enum XenditRefundCurrency { IDR, PHP }
 
 enum XenditReedemPoints { REDEEM_NONE, REDEEM_ALL }
+
+enum XenditAddressVerificationResult {
+  MATCHED,
+  NOT_MATCHED,
+  NOT_MATCHED_NAME,
+  PARTIAL_MATCH_ADDRESS,
+  PARTIAL_MATCH_ZIP,
+  PARTIAL_MATCH_NAME,
+  INVALID,
+  NOT_SUPPORTED,
+  NOT_AVAILABLE,
+  UNKNOWN_FROM_PROCESSOR
+}
+
+enum XenditCVVResult {
+  MATCHED,
+  NOT_MATCHED,
+  NOT_PROCESSED,
+  NOT_INCLUDED,
+  VALIDATION_FAILED,
+  SUSPICIOUS_TRANSACTION,
+  NOT_SUPPORTED,
+  UNKNOWN_FROM_PROCESSOR
+}
+
+enum XenditCardType {
+  CREDIT,
+  DEBIT,
+}
+
+enum XenditCardNetwork {
+  VISA,
+  MASTERCARD,
+  JCB,
+  AMEX,
+}
+
+enum XenditTreeDSecureFlow { CHALLENGE, FRICTIONLESS }
+
+enum XenditTreeDSecureResult {
+  SUCCESSFUL,
+  ATTEMPTED,
+  FAILED,
+  NOT_AVAILABLE,
+  PROCESSING_ERROR
+}
+
+enum XenditTreeDSecureResultReason {
+  CARD_NOT_ENROLLED,
+  NETWORK_NOT_SUPPORTED,
+  ABANDONED,
+  CANCELED,
+  REJECTED,
+  BYPASSED,
+  PROCESSOR_ERROR
+}
+
+enum XenditDirectDebitType { DEBIT_CARD, BANK_ACCOUNT }
+
+enum XenditPaymentRequestItemType {
+  DIGITAL_PRODUCT,
+  PHYSICAL_PRODUCT,
+  DIGITAL_SERVICE,
+  PHYSICAL_SERVICE,
+  FEE,
+  DISCOUNT
+}
