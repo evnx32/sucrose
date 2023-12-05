@@ -1,13 +1,29 @@
 import 'package:sucrose/src/xendit/enums/enums.dart';
 
 class XenditBusinessDetail {
+  /// Name of the business
   final String? businessName;
+
+  /// Trading name of the business
   final String? tradingName;
+
+  /// Legal entity type of the business
   final XenditBusinessType? businessType;
+
+  /// Free text description of the type of business this entity pursues. Examples are: Ecommerce, Travel
   final String? natureOfBusiness;
+
+  /// Registered country of the business
+
+  /// `Format` ISO 3166-2 Country Code
   final String? businessDomicile;
+
+  /// Business registration date
+
+  /// `Format` YYYY-MM-DD string
   final String? dateOfRegistration;
 
+  /// Object containing details of the business. Will be null if type is not BUSINESS
   XenditBusinessDetail({
     this.businessName,
     this.tradingName,

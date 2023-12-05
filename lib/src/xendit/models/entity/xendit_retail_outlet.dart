@@ -10,26 +10,31 @@ class XenditRetailOutlet {
   final int? amount;
 
   /// ISO 4217 three-letter code of the transaction's currency. Will be auto-filled based on the channel_code if not provided.
-  final int? currency;
-  final XenditOTCCode? channelCode;
+  final XenditOTCCurrency currency;
+
+  /// Identifier for the payment channel partner
+  final XenditOTCCode channelCode;
+
+  /// Information provided specific to the channel partner that was provided during the request
   final RetailOutletChannelProperties? channelProperties;
 
+  /// Object that contains the required information to perform payments with retail outlet
   XenditRetailOutlet({
     this.amount,
-    this.currency,
-    this.channelCode,
+    required this.currency,
+    required this.channelCode,
     this.channelProperties,
   });
 
   factory XenditRetailOutlet.fromJson(Map<String, dynamic> json) =>
       XenditRetailOutlet(
         amount: json["amount"],
-        currency: json["currency"],
-        channelCode: json["channel_code"] == null
-            ? null
-            : XenditOTCCode.values.firstWhere(
-                (element) => element.name == json["channel_code"],
-              ),
+        currency: XenditOTCCurrency.values.firstWhere(
+          (element) => element.name == json["currency"],
+        ),
+        channelCode: XenditOTCCode.values.firstWhere(
+          (element) => element.name == json["channel_code"],
+        ),
         channelProperties: json["channel_properties"] == null
             ? null
             : RetailOutletChannelProperties.fromJson(
@@ -37,9 +42,9 @@ class XenditRetailOutlet {
       );
 
   Map<String, dynamic> toJson() => {
+        "currency": currency.name,
+        "channel_code": channelCode.name,
         if (amount != null) "amount": amount,
-        if (currency != null) "currency": currency,
-        if (channelCode != null) "channel_code": channelCode!.name,
         if (channelProperties != null)
           "channel_properties": channelProperties!.toJson(),
       };

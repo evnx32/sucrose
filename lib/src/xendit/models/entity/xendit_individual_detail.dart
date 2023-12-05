@@ -1,28 +1,36 @@
-// To parse this JSON data, do
-//
-//     final xenditIndividualDetail = xenditIndividualDetailFromJson(jsonString);
-
-import 'dart:convert';
-
-import 'package:sucrose/sucrose.dart';
-
-XenditIndividualDetail xenditIndividualDetailFromJson(String str) =>
-    XenditIndividualDetail.fromJson(json.decode(str));
-
-String xenditIndividualDetailToJson(XenditIndividualDetail data) =>
-    json.encode(data.toJson());
+import 'package:sucrose/src/xendit/enums/enums.dart';
 
 class XenditIndividualDetail {
+  /// Primary or first name/s of customer
   final String givenNames;
+
+  ///
   final String? givenNamesNonRoman;
+
+  ///  Last or family name of customer
   final String surname;
   final String? surnameNonRoman;
+
+  /// Country code for customer's nationality
+  ///
+  /// Format ISO 3166-2 Country Code
   final String? nationality;
+
+  /// Date of birth of the customer
+  ///
+  /// Format YYYY-MM-DD string
   final String? dateOfBirth;
+
+  /// City or other relevant location for the customer’s birth place
   final String? placeOfBirth;
+
+  /// Gender of customer
   final XenditCustomerGender? gender;
+
+  /// Name of account holder as per the account provider
   final String? employment;
 
+  /// Object containing details of the individual. Will be null if type is not `INDIVIDUAL`
   XenditIndividualDetail({
     required this.givenNames,
     this.givenNamesNonRoman,

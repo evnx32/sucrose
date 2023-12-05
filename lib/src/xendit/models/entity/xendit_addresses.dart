@@ -1,17 +1,42 @@
 import 'package:sucrose/src/xendit/enums/enums.dart';
 
 class XenditAddresses {
-  final String? country;
+  /// Country of residence of customer
+  ///
+  /// Format ISO 3166-2 Country Code
+  final String country;
+
+  ///  Line 1 of street address e.g., building name and apartment number
+  ///
+  /// Maximum length 255 characters
   final String? streetLine1;
+
+  /// Line 2 of street address e.g., street number and name
+  ///
+  /// Maximum length 255 characters
   final String? streetLine2;
+
+  /// City, village or town of residence of customer
+  ///
+  /// Maximum length 255 characters
   final String? city;
+
+  /// Province, state or region of residence of customer
+  ///
+  /// Maximum length 255 characters
   final String? provinceState;
+
+  /// ZIP/Postal Code of customer
+
+  /// Maximum length 255 characters
   final String? postalCode;
+
+  /// Address type of customer
   final XenditAdressesCategory? category;
   final bool? isPrimary;
 
   XenditAddresses({
-    this.country,
+    required this.country,
     this.streetLine1,
     this.streetLine2,
     this.city,
@@ -35,7 +60,7 @@ class XenditAddresses {
       );
 
   Map<String, dynamic> toJson() => {
-        if (country != null) "country": country,
+        "country": country,
         if (streetLine1 != null) "street_line1": streetLine1,
         if (streetLine2 != null) "street_line2": streetLine2,
         if (city != null) "city": city,

@@ -1,14 +1,7 @@
-import 'dart:convert';
+import 'package:sucrose/src/xendit/models/entity/xendit_customer_notification_preference.dart';
+import 'package:sucrose/src/xendit/models/entity/xendit_fee.dart';
 import 'package:sucrose/src/xendit/models/entity/xendit_invoice_customer.dart';
 import 'package:sucrose/src/xendit/models/entity/xendit_invoice_item.dart';
-import '../../entity/xendit_customer_notification_preference.dart';
-import '../../entity/xendit_fee.dart';
-
-XenditInvoiceRequest xenditInvoiceRequestFromJson(String str) =>
-    XenditInvoiceRequest.fromJson(json.decode(str));
-
-String xenditInvoiceRequestToJson(XenditInvoiceRequest data) =>
-    json.encode(data.toJson());
 
 class XenditInvoiceRequest {
   final String externalId;

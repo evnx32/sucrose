@@ -1,14 +1,30 @@
 class XenditBillingInformation {
-  final dynamic city;
-  final String? country;
-  final dynamic postalCode;
-  final dynamic provinceState;
-  final dynamic streetLine1;
-  final dynamic streetLine2;
+  /// City, village or town as appropriate
+  final String? city;
 
+  /// 2-letter ISO 3166-2 country code for the customer’s country of residence
+  final String country;
+
+  /// Postal, zip or rural delivery code, if applicable
+  final String? postalCode;
+
+  /// Either one of (whichever is applicable):
+  ///
+  /// Geographic area, province, or region
+  ///
+  /// Formal state designation within country
+  final String? provinceState;
+
+  /// Building name and apartment unit number
+  final String? streetLine1;
+
+  /// Building street address
+  final String? streetLine2;
+
+  /// Object containing the payor's billing address. For CARD, this should match the billing information on record with the cardholder's issuer.
   XenditBillingInformation({
     this.city,
-    this.country,
+    required this.country,
     this.postalCode,
     this.provinceState,
     this.streetLine1,
@@ -26,11 +42,11 @@ class XenditBillingInformation {
       );
 
   Map<String, dynamic> toJson() => {
-        "city": city,
         "country": country,
-        "postal_code": postalCode,
-        "province_state": provinceState,
-        "street_line1": streetLine1,
-        "street_line2": streetLine2,
+        if (city != null) "city": city,
+        if (postalCode != null) "postal_code": postalCode,
+        if (provinceState != null) "province_state": provinceState,
+        if (streetLine1 != null) "street_line1": streetLine1,
+        if (streetLine2 != null) "street_line2": streetLine2,
       };
 }

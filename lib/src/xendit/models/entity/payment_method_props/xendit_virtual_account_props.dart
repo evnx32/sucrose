@@ -2,16 +2,17 @@ import 'package:sucrose/src/xendit/enums/enums.dart';
 import 'package:sucrose/src/xendit/models/entity/channel_properties/xendit_va_channel_properties.dart';
 
 class XenditVirtualAccountProps {
-  /// The channel code of the QR code.
+  /// Identifier for the payment channel partner
   final XenditVAccountCode channelCode;
 
   /// The expiration date of the QR code.
-  final DateTime? expirationDate;
+  // final DateTime? expirationDate;
   final XenditVAChannelProperties channelProperties;
 
+  /// Object that contains the required information to perform payments with virtual account
   XenditVirtualAccountProps({
     required this.channelCode,
-    this.expirationDate,
+    // this.expirationDate,
     required this.channelProperties,
   });
 
@@ -27,8 +28,8 @@ class XenditVirtualAccountProps {
 
   Map<String, dynamic> toJson() => {
         "channel_code": channelCode.name,
-        if (expirationDate != null)
-          "expiration_date": expirationDate!.toIso8601String(),
+        // if (expirationDate != null)
+        //   "expiration_date": expirationDate!.toIso8601String(),
         "channel_properties": channelProperties.toJson(),
       };
 }

@@ -38,6 +38,7 @@ class XenditChannelProperties {
 
   final String? cardonfileType;
 
+  /// Object that contains the required information to perform payments.
   XenditChannelProperties({
     this.redeemPoints,
     this.successReturnUrl,

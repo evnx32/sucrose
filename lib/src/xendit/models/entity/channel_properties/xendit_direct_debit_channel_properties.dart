@@ -34,6 +34,7 @@ class XenditDirectDebitChannelProperties {
   /// This will be null if not applicable.
   final String? identityDocumentNumber;
 
+  /// Object that contains the required information to perform payments with direct debit account
   XenditDirectDebitChannelProperties({
     this.failureReturnUrl,
     this.successReturnUrl,

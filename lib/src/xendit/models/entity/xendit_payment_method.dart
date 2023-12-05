@@ -3,7 +3,7 @@ import 'package:sucrose/src/xendit/models/entity/xendit_card.dart';
 import 'package:sucrose/src/xendit/models/entity/xendit_direct_debit.dart';
 import 'package:sucrose/src/xendit/models/entity/xendit_ewallet.dart';
 import 'package:sucrose/src/xendit/models/entity/xendit_metadata.dart';
-import 'package:sucrose/src/xendit/models/entity/xendit_qr_code_response.dart';
+import 'package:sucrose/src/xendit/models/entity/xendit_qr_code.dart';
 import 'package:sucrose/src/xendit/models/entity/xendit_billing_information.dart';
 import 'package:sucrose/src/xendit/models/entity/xendit_retail_outlet.dart';
 import 'package:sucrose/src/xendit/models/entity/xendit_virtual_account.dart';
@@ -50,7 +50,7 @@ class XenditPaymentMethod {
   final XenditVirtualAccount? virtualAccount;
 
   /// QR Code object containing information about the QR code used for the payment method.
-  final XenditQrCodeResponse? qrCode;
+  final XenditQrCode? qrCode;
 
   /// Object containing key-value pairs of additional information that will be included in the response if present.
   ///
@@ -66,6 +66,7 @@ class XenditPaymentMethod {
   /// The status of the payment method.
   final String? status;
 
+  /// Object that contains the required information to perform payments.
   XenditPaymentMethod({
     this.id,
     required this.type,
@@ -112,7 +113,7 @@ class XenditPaymentMethod {
             : XenditVirtualAccount.fromJson(json["virtual_account"]),
         qrCode: json["qr_code"] == null
             ? null
-            : XenditQrCodeResponse.fromJson(json["qr_code"]),
+            : XenditQrCode.fromJson(json["qr_code"]),
         metadata: json["metadata"] == null
             ? null
             : XenditMetadata.fromJson(json["metadata"]),

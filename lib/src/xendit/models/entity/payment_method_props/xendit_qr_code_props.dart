@@ -1,12 +1,13 @@
 import '../../../enums/enums.dart';
 
 class XenditQrCodeProps {
-  /// The channel code of the QR code.
+  /// Identifier for the QR Code standard used.
   final XenditQRChannelCode channelCode;
 
-  /// The expiration date of the QR code.
+  /// Timestamp in ISO 8601 UTC+0 for when the QR Code will be valid.
   final DateTime? expirationDate;
 
+  /// Object that contains the required information to perform payments with QR code
   XenditQrCodeProps({
     required this.channelCode,
     this.expirationDate,

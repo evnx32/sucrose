@@ -20,6 +20,7 @@ class XenditCardChannelProperties {
   /// Defaults to CUSTOMER_UNSCHEDULED
   final String? cardonfileType;
 
+  /// Object that contains the required information to perform payments with card
   XenditCardChannelProperties({
     required this.skipThreeDSecure,
     this.successReturnUrl,

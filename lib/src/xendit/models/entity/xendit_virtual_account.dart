@@ -2,15 +2,29 @@ import 'package:sucrose/src/xendit/enums/enums.dart';
 import 'package:sucrose/src/xendit/models/entity/channel_properties/xendit_va_channel_properties.dart';
 
 class XenditVirtualAccount {
+  /// Expected and accepted amount of the transaction in the actual value in the provided currency.
+  ///
+  /// Decimal places support varies per currency:
+  ///
+  /// IDR - Only supports positive integers.
+  ///
+  /// VND - Only supports positive integers.
   final int? amount;
-  final XenditCurrency? currency;
-  final XenditVAccountCode? channelCode;
+
+  /// ISO 4217 three-letter code of the transaction's currency. Will be auto-filled based on the channel_code if not provided.
+  final XenditCurrency currency;
+
+  /// Identifier for the payment channel partner
+  final XenditVAccountCode channelCode;
+
+  /// Information provided specific to the channel partner that was provided during the request
   final XenditVAChannelProperties channelProperties;
 
+  /// Object that contains the required information to perform payments with virtual account
   XenditVirtualAccount({
     this.amount,
-    this.currency,
-    this.channelCode,
+    required this.currency,
+    required this.channelCode,
     required this.channelProperties,
   });
 
@@ -30,8 +44,8 @@ class XenditVirtualAccount {
 
   Map<String, dynamic> toJson() => {
         if (amount != null) "amount": amount,
-        if (currency != null) "currency": currency?.name,
-        if (channelCode != null) "channel_code": channelCode?.name,
+        "currency": currency.name,
+        "channel_code": channelCode.name,
         "channel_properties": channelProperties.toJson(),
       };
 }

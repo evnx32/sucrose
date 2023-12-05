@@ -14,18 +14,32 @@ XenditCustomer xenditCustomerFromJson(String str) =>
 String xenditCustomerToJson(XenditCustomer data) => json.encode(data.toJson());
 
 class XenditCustomer {
+  /// Merchant-provided identifier for the customer
   final String referenceId;
+
+  /// Type of customer.
+  final XenditCustomerType type;
+
+  ///  object containing details of the individual. Will be null if type is not `INDIVIDUAL`
+  final XenditIndividualDetail? individualDetail;
+
+  /// object containing details of the business. Will be null if type is not `BUSINESS`
+  final XenditBusinessDetail? businessDetail;
+
+  /// E-mail address of customer
+  ///
+  /// Maximum length 50 characters
+  final String email;
+
+  /// Mobile number of customer in E.164 format
+  ///
+  /// Maximum length 50 characters
+  final String mobileNumber;
 
   /// If you want to create a customer with individual detail, set this to `XenditCustomerType.individual`. If you want to create a customer with business detail, set this to `XenditCustomerType.business`.
   /// then you can set XenidtIndividualDetail or XenditBusinessDetail according to the type you set.
   ///
   /// if you set `XenditCustomerType.individual`, you must set `XenditIndividualDetail` and set `XenditBusinessDetail` to null or don't set it.
-  final XenditCustomerType type;
-  final XenditIndividualDetail? individualDetail;
-  final XenditBusinessDetail? businessDetail;
-  final String email;
-  final String mobileNumber;
-
   XenditCustomer({
     required this.referenceId,
     required this.type,
@@ -37,7 +51,9 @@ class XenditCustomer {
 
   factory XenditCustomer.fromJson(Map<String, dynamic> json) => XenditCustomer(
         referenceId: json["reference_id"],
-        type: json["type"],
+        type: XenditCustomerType.values.firstWhere(
+          (element) => element.name == json["type"],
+        ),
         individualDetail:
             XenditIndividualDetail.fromJson(json["individual_detail"]),
         businessDetail: json["business_detail"] == null

@@ -4,7 +4,7 @@ import 'package:sucrose/src/xendit/models/entity/xendit_card.dart';
 import 'package:sucrose/src/xendit/models/entity/xendit_direct_debit.dart';
 import 'package:sucrose/src/xendit/models/entity/xendit_ewallet.dart';
 import 'package:sucrose/src/xendit/models/entity/xendit_metadata.dart';
-import 'package:sucrose/src/xendit/models/entity/xendit_qr_code_response.dart';
+import 'package:sucrose/src/xendit/models/entity/xendit_qr_code.dart';
 import 'package:sucrose/src/xendit/models/entity/xendit_retail_outlet.dart';
 import 'package:sucrose/src/xendit/models/entity/xendit_virtual_account.dart';
 
@@ -21,7 +21,7 @@ class XenditPaymentMethodRequest {
   final dynamic directBankTransfer;
   final XenditRetailOutlet? overTheCounter;
   final XenditVirtualAccount? virtualAccount;
-  final XenditQrCodeResponse? qrCode;
+  final XenditQrCode? qrCode;
   final XenditMetadata? metadata;
   final XenditBillingInformation? billingInformation;
   final XenditReusablePaymentMethod reusability;
@@ -65,7 +65,7 @@ class XenditPaymentMethodRequest {
         virtualAccount: json["virtual_account"],
         qrCode: json["qr_code"] == null
             ? null
-            : XenditQrCodeResponse.fromJson(json["qr_code"]),
+            : XenditQrCode.fromJson(json["qr_code"]),
         metadata: json["metadata"],
         billingInformation: json["billing_information"] == null
             ? null

@@ -1,11 +1,23 @@
 class XenditAddress {
+  /// City, village or town as appropriate
   final String? city;
+
+  /// 2-letter ISO 3166-2 country code for the customer’s country of residence
   final String? country;
+
+  /// Postal, zip or rural delivery code, if applicable
   final String? postalCode;
+
+  /// State, province, prefecture or region as appropriate
   final String? state;
+
+  /// Building name and apartment unit number
   final String? streetLine1;
+
+  /// Building street address
   final String? streetLine2;
 
+  /// Address of the customer
   XenditAddress({
     this.city,
     this.country,

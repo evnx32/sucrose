@@ -4,7 +4,7 @@ import 'package:sucrose/src/xendit/models/entity/xendit_card.dart';
 import 'package:sucrose/src/xendit/models/entity/xendit_direct_debit.dart';
 import 'package:sucrose/src/xendit/models/entity/xendit_ewallet.dart';
 import 'package:sucrose/src/xendit/models/entity/xendit_metadata.dart';
-import 'package:sucrose/src/xendit/models/entity/xendit_qr_code_response.dart';
+import 'package:sucrose/src/xendit/models/entity/xendit_qr_code.dart';
 import 'package:sucrose/src/xendit/models/entity/xendit_retail_outlet.dart';
 import 'package:sucrose/src/xendit/models/entity/xendit_virtual_account.dart';
 
@@ -29,7 +29,7 @@ class XenditEwalletResponse {
   final XenditDirectDebit? directDebit;
   final XenditCard? card;
   final XenditRetailOutlet? overTheCounter;
-  final XenditQrCodeResponse? qrCode;
+  final XenditQrCode? qrCode;
   final XenditVirtualAccount? virtualAccount;
 
   XenditEwalletResponse({
