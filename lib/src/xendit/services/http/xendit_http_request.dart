@@ -370,6 +370,7 @@ class XenditHttpRequest {
           customer.toJson(),
         ),
       );
+
       return XenditCustomerResponse.fromJson(response.data);
     } on DioException catch (e) {
       return Future.error(
@@ -522,7 +523,6 @@ class XenditHttpRequest {
 
   /// Get Refund by id
   /// [id] is the refund id
-
   Future<XenditRefundResponse> getRefund({
     required String id,
     String forUserId = "",
