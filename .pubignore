@@ -1,3 +1,2 @@
-example/
-bin/
-test/
+/bin/
+/test/
