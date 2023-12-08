@@ -47,8 +47,10 @@ class XenditEndpoint {
   // Get QR Code by Id
   String getQRCodePaymentByID(String id) => "$BASE_URL/qr_codes/$id";
 
-  // Create Fixed Virtual Account
+  // Refund QR Code
+  String refundQRCodePayment(String id) => "$BASE_URL/qr_codes/$id/refunds";
 
+  // Create Fixed Virtual Account
   String createFixedVirtualAccount() => "$BASE_URL/callback_virtual_accounts";
 
   // Get Fixed Virtual Account by Id
@@ -58,4 +60,14 @@ class XenditEndpoint {
   // Patch Fixed Virtual Account
   String patchFixedVirtualAccount(String id) =>
       "$BASE_URL/callback_virtual_accounts/$id";
+
+  // Create Ewallet Payment
+  String createEwalletPayment() => "$BASE_URL/ewallets/charges";
+
+  // Get Ewallet Payment by Id
+  String getEwalletPayment(String id) => "$BASE_URL/ewallets/charges/$id";
+
+  // Refund Ewallet Payment
+  String refundEwalletPayment(String id) =>
+      "$BASE_URL/ewallets/charges/$id/refunds";
 }
