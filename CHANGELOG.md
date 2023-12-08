@@ -13,7 +13,9 @@
 ## 0.0.3
 
 * Adding more payment method.
+* Adding refund on the payment.
 * Adding some header.
+* Adding some endpoints.
 * Add debug selection for showing log.
 * Adding some documentation on the code.
 * Adding some `enums`.
