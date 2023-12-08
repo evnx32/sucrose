@@ -1,17 +1,6 @@
-// To parse this JSON data, do
-//
-//     final xenditCustomer = xenditCustomerFromJson(jsonString);
-
-import 'dart:convert';
-
 import 'package:sucrose/src/xendit/enums/enums.dart';
 import 'package:sucrose/src/xendit/models/entity/xendit_business_detail.dart';
 import 'package:sucrose/src/xendit/models/entity/xendit_individual_detail.dart';
-
-XenditCustomer xenditCustomerFromJson(String str) =>
-    XenditCustomer.fromJson(json.decode(str));
-
-String xenditCustomerToJson(XenditCustomer data) => json.encode(data.toJson());
 
 class XenditCustomer {
   /// Merchant-provided identifier for the customer

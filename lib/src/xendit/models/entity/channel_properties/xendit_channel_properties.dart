@@ -52,8 +52,10 @@ class XenditChannelProperties {
 
   factory XenditChannelProperties.fromJson(Map<String, dynamic> json) =>
       XenditChannelProperties(
-        redeemPoints: XenditReedemPoints.values
-            .firstWhere((element) => element.name == json["redeem_points"]),
+        redeemPoints: json["redeem_points"] != null
+            ? XenditReedemPoints.values
+                .firstWhere((element) => element.name == json["redeem_points"])
+            : null,
         successReturnUrl: json["success_return_url"],
         failureReturnUrl: json["failure_return_url"],
         cancelReturnUrl: json["cancel_return_url"],

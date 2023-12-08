@@ -1,26 +1,10 @@
 import 'dart:convert';
 
-import 'package:sucrose/src/xendit/models/entity/xendit_customer.dart';
-import 'package:sucrose/src/xendit/models/request/invoice/xendit_invoice_request.dart';
-import 'package:sucrose/src/xendit/models/request/linking/ewallet/xendit_ewallet_linking_request.dart';
-import 'package:sucrose/src/xendit/models/request/linking/ewallet/xendit_update_ewallet_request.dart';
-import 'package:sucrose/src/xendit/models/request/refund/xendit_refund_request.dart';
-import 'package:sucrose/src/xendit/models/request/request_payment/ewallet/xendit_ewallet_request.dart';
-import 'package:sucrose/src/xendit/models/request/request_payment/qr/xendit_qr_request.dart';
-import 'package:sucrose/src/xendit/models/request/request_payment/virtual_account/xendit_virtual_account_request.dart';
-import 'package:sucrose/src/xendit/models/response/customer/xendit_customer_response.dart';
-import 'package:sucrose/src/xendit/models/response/general/ewallet/xendit_ewallet_response.dart';
-import 'package:sucrose/src/xendit/models/response/general/xendit_list_payment_method_response.dart';
-import 'package:sucrose/src/xendit/models/response/general/xendit_list_payment_request_response.dart';
-import 'package:sucrose/src/xendit/models/response/general/xendit_payment_method_by_id_response.dart';
-import 'package:sucrose/src/xendit/models/response/general/xendit_payment_request_by_id_response.dart';
-import 'package:sucrose/src/xendit/models/response/invoice/xendit_invoice_response.dart';
-import 'package:sucrose/src/xendit/models/response/refund/xendit_refund_response.dart';
-import 'package:sucrose/src/xendit/models/response/request_payment/xendit_request_payment_response.dart';
-import 'package:sucrose/src/xendit/services/endpoint/xendit_endpoint.dart';
-import 'package:sucrose/src/xendit/services/exception/xendit_exception.dart';
+import 'package:sucrose/src/xendit/models/xendit_models.dart';
 import 'package:dio/dio.dart';
 import 'package:logger/logger.dart';
+import 'package:sucrose/src/xendit/services/endpoint/xendit_endpoint.dart';
+import 'package:sucrose/src/xendit/services/exception/xendit_exception.dart';
 
 class XenditHttpRequest {
   final String _tag = "XenditHttpRequest";
@@ -29,6 +13,11 @@ class XenditHttpRequest {
 
   final Dio _dio = Dio();
 
+  /// Initialize XenditHttpRequest
+  ///
+  /// [apiKey] is your Xendit API Key
+  ///
+  /// [debug] is to enable debug mode, default is false
   XenditHttpRequest.init(String apiKey, {bool debug = false}) {
     if (debug) {
       _dio.interceptors.add(LogInterceptor(
@@ -62,12 +51,25 @@ class XenditHttpRequest {
 
   /// Create a new invoice
   ///
-  /// [data] is the request body, see [XenditInvoiceRequest]
-
+  /// `request` is the request body, see `XenditInvoiceRequest`
+  ///
+  /// `forUserId` is the sub-account user-id that you want to make this transaction for.
+  ///
   /// The sub-account user-id that you want to make this transaction for.
-  /// Split Rule ID that you would like to apply to this Invoice in order to split and route payments to multiple accounts.
+  ///
+  /// This header is only used if you have access to xenPlatform. See [xenPlatform](https://developers.xendit.co/api-reference/payments-api/#xenplatform) for more information
+  ///
+  /// `withSplitRule` Split Rule ID that you would like to apply to this Payment Request in order to split and route payments to multiple accounts.
+  ///
+  /// Please note: If you include this parameter, we will return the split_rule_id in the header of the API response.
+  ///
+  /// If for-user-id header is not present, Split Rule will still be routed from platform account to the specified destination account
+  ///
+  /// Please note that this is the newest header version, the older version with-fee-rule header will be deprecated by September 30, 2025. Please migrate to this version before the the deprecation date if you are still using with-fee-rule header.
+  ///
+  /// This header is only used if you have access to xenPlatform. See [xenPlatform](https://developers.xendit.co/api-reference/payments-api/#xenplatform) for more information.
   Future<XenditInvoiceResponse> createInvoice({
-    required XenditInvoiceRequest data,
+    required XenditInvoiceRequest request,
     String forUserId = "",
     String withSplitRule = "",
   }) async {
@@ -80,7 +82,7 @@ class XenditHttpRequest {
             if (withSplitRule.isNotEmpty) "with-split-rule": withSplitRule
           },
         ),
-        data: jsonEncode(data.toJson()),
+        data: jsonEncode(request.toJson()),
       );
       return XenditInvoiceResponse.fromJson(response.data);
     } on DioException catch (e) {
@@ -99,6 +101,15 @@ class XenditHttpRequest {
   }
 
   /// Get invoice by id
+  ///
+  /// `invoiceId` is the invoice id that you want to get
+  ///
+  /// `forUserId` is the sub-account user-id that you want to make this transaction for.
+  ///
+  /// The sub-account user-id that you want to make this transaction for.
+  ///
+  /// This header is only used if you have access to xenPlatform. See [xenPlatform](https://developers.xendit.co/api-reference/payments-api/#xenplatform) for more information
+
   Future<XenditInvoiceResponse> getInvoice({
     required String invoiceId,
     String forUserId = "",
@@ -129,6 +140,26 @@ class XenditHttpRequest {
   }
 
   /// Create a new QR Payment Request
+  ///
+  /// `request` is the request body, see `XenditQrRequest`
+  ///
+  /// `forUserId` is the sub-account user-id that you want to make this transaction for.
+  ///
+  /// The sub-account user-id that you want to make this transaction for.
+  ///
+  /// This header is only used if you have access to xenPlatform. See [xenPlatform](https://developers.xendit.co/api-reference/payments-api/#xenplatform) for more information
+  ///
+  /// `withSplitRule` Split Rule ID that you would like to apply to this Payment Request in order to split and route payments to multiple accounts.
+  ///
+  /// Please note: If you include this parameter, we will return the split_rule_id in the header of the API response.
+  ///
+  /// If for-user-id header is not present, Split Rule will still be routed from platform account to the specified destination account
+  ///
+  /// Please note that this is the newest header version, the older version with-fee-rule header will be deprecated by September 30, 2025. Please migrate to this version before the the deprecation date if you are still using with-fee-rule header.
+  ///
+  /// This header is only used if you have access to xenPlatform. See [xenPlatform](https://developers.xendit.co/api-reference/payments-api/#xenplatform) for more information.
+  ///
+  /// `idempotencyKey` Provided to prevent duplicate requests. Can be equal to any UUID. Idempotency keys are stored on the request layer; it expires after 24 hours from the first request. Note: Max 100 characters
   Future<XenditRequestPaymentResponse> createQrPaymentRequest({
     required XenditQrRequest request,
     String forUserId = "",
@@ -142,7 +173,7 @@ class XenditHttpRequest {
           headers: {
             if (forUserId.isNotEmpty) "for-user-id": forUserId,
             if (withSplitRule.isNotEmpty) "with-split-rule": withSplitRule,
-            if (idempotencyKey.isNotEmpty) "idempotency-Key": idempotencyKey,
+            if (idempotencyKey.isNotEmpty) "idempotency-key": idempotencyKey,
           },
         ),
         data: jsonEncode(request.toJson()),
@@ -164,7 +195,26 @@ class XenditHttpRequest {
   }
 
   /// Create a new Virtual Account Payment Request
-
+  ///
+  /// `request` is the request body, see `XenditVirtualAccountRequest`
+  ///
+  /// `forUserId` is the sub-account user-id that you want to make this transaction for.
+  ///
+  /// The sub-account user-id that you want to make this transaction for.
+  ///
+  /// This header is only used if you have access to xenPlatform. See [xenPlatform](https://developers.xendit.co/api-reference/payments-api/#xenplatform) for more information
+  ///
+  /// `withSplitRule` Split Rule ID that you would like to apply to this Payment Request in order to split and route payments to multiple accounts.
+  ///
+  /// Please note: If you include this parameter, we will return the split_rule_id in the header of the API response.
+  ///
+  /// If for-user-id header is not present, Split Rule will still be routed from platform account to the specified destination account
+  ///
+  /// Please note that this is the newest header version, the older version with-fee-rule header will be deprecated by September 30, 2025. Please migrate to this version before the the deprecation date if you are still using with-fee-rule header.
+  ///
+  /// This header is only used if you have access to xenPlatform. See [xenPlatform](https://developers.xendit.co/api-reference/payments-api/#xenplatform) for more information.
+  ///
+  /// `idempotencyKey` Provided to prevent duplicate requests. Can be equal to any UUID. Idempotency keys are stored on the request layer; it expires after 24 hours from the first request. Note: Max 100 characters
   Future<XenditRequestPaymentResponse> createVAPaymentRequest({
     required XenditVirtualAccountRequest request,
     String forUserId = "",
@@ -200,6 +250,26 @@ class XenditHttpRequest {
   }
 
   /// Ewallet One Time Payment
+  ///
+  /// `request` is the request body, see `XenditEwalletRequest`
+  ///
+  /// `forUserId` is the sub-account user-id that you want to make this transaction for.
+  ///
+  /// The sub-account user-id that you want to make this transaction for.
+  ///
+  /// This header is only used if you have access to xenPlatform. See [xenPlatform](https://developers.xendit.co/api-reference/payments-api/#xenplatform) for more information
+  ///
+  /// `withSplitRule` Split Rule ID that you would like to apply to this Payment Request in order to split and route payments to multiple accounts.
+  ///
+  /// Please note: If you include this parameter, we will return the split_rule_id in the header of the API response.
+  ///
+  /// If for-user-id header is not present, Split Rule will still be routed from platform account to the specified destination account
+  ///
+  /// Please note that this is the newest header version, the older version with-fee-rule header will be deprecated by September 30, 2025. Please migrate to this version before the the deprecation date if you are still using with-fee-rule header.
+  ///
+  /// This header is only used if you have access to xenPlatform. See [xenPlatform](https://developers.xendit.co/api-reference/payments-api/#xenplatform) for more information.
+  ///
+  /// `idempotencyKey` Provided to prevent duplicate requests. Can be equal to any UUID. Idempotency keys are stored on the request layer; it expires after 24 hours from the first request. Note: Max 100 characters
   Future<XenditRequestPaymentResponse> createEwalletOTPPaymentRequest({
     required XenditEwalletRequest request,
     String forUserId = "",
@@ -237,7 +307,14 @@ class XenditHttpRequest {
   /// ----------- General Payment Request ------------
 
   /// Get Payment Request by id
-
+  ///
+  /// `id` is the payment request id that you want to get
+  ///
+  /// `forUserId` is the sub-account user-id that you want to make this transaction for.
+  ///
+  /// The sub-account user-id that you want to make this transaction for.
+  ///
+  /// This header is only used if you have access to xenPlatform. See [xenPlatform](https://developers.xendit.co/api-reference/payments-api/#xenplatform) for more information
   Future<XenditPaymentRequestByIdResponse> getPaymentRequest({
     required String id,
     String forUserId = "",
@@ -268,6 +345,12 @@ class XenditHttpRequest {
   }
 
   /// Get List of Payment Request
+  ///
+  /// `forUserId` is the sub-account user-id that you want to make this transaction for.
+  ///
+  /// The sub-account user-id that you want to make this transaction for.
+  ///
+  /// This header is only used if you have access to xenPlatform. See [xenPlatform](https://developers.xendit.co/api-reference/payments-api/#xenplatform) for more information
   Future<XenditListPaymentRequestResponse> getListPaymentRequest({
     String forUserId = "",
   }) async {
@@ -296,6 +379,15 @@ class XenditHttpRequest {
     }
   }
 
+  /// Get List of Payment Request by id
+  ///
+  /// `id` is the payment request id that you want to get
+  ///
+  /// `forUserId` is the sub-account user-id that you want to make this transaction for.
+  ///
+  /// The sub-account user-id that you want to make this transaction for.
+  ///
+  /// This header is only used if you have access to xenPlatform. See [xenPlatform](https://developers.xendit.co/api-reference/payments-api/#xenplatform) for more information
   Future<XenditPaymentMethodByIdResponse> getMethodPaymentById({
     required String id,
     String forUserId = "",
@@ -325,6 +417,13 @@ class XenditHttpRequest {
     }
   }
 
+  /// Get List of Payment Method
+  ///
+  /// `forUserId` is the sub-account user-id that you want to make this transaction for.
+  ///
+  /// The sub-account user-id that you want to make this transaction for.
+  ///
+  /// This header is only used if you have access to xenPlatform. See [xenPlatform](https://developers.xendit.co/api-reference/payments-api/#xenplatform) for more information
   Future<XenditListPaymentMethodResponse> getListMethodPayment(
       {String forUserId = ""}) async {
     try {
@@ -352,6 +451,17 @@ class XenditHttpRequest {
     }
   }
 
+  /// Create new Customer
+  ///
+  /// `customer` is the request body, see `XenditCustomer`
+  ///
+  /// `forUserId` is the sub-account user-id that you want to make this transaction for.
+  ///
+  /// The sub-account user-id that you want to make this transaction for.
+  ///
+  /// This header is only used if you have access to xenPlatform. See [xenPlatform](https://developers.xendit.co/api-reference/payments-api/#xenplatform) for more information
+  ///
+  /// `idempotencyKey` Provided to prevent duplicate requests. Can be equal to any UUID. Idempotency keys are stored on the request layer; it expires after 24 hours from the first request. Note: Max 100 characters
   Future<XenditCustomerResponse> createCustomer({
     required XenditCustomer customer,
     String forUserId = "",
@@ -387,6 +497,27 @@ class XenditHttpRequest {
     }
   }
 
+  /// Initialize Linking Ewallet
+  ///
+  /// `request` is the request body, see `XenditEwalletLinkingRequest`
+  ///
+  /// `forUserId` is the sub-account user-id that you want to make this transaction for.
+  ///
+  /// The sub-account user-id that you want to make this transaction for.
+  ///
+  /// This header is only used if you have access to xenPlatform. See [xenPlatform](https://developers.xendit.co/api-reference/payments-api/#xenplatform) for more information
+  ///
+  /// `withSplitRule` Split Rule ID that you would like to apply to this Payment Request in order to split and route payments to multiple accounts.
+  ///
+  /// Please note: If you include this parameter, we will return the split_rule_id in the header of the API response.
+  ///
+  /// If for-user-id header is not present, Split Rule will still be routed from platform account to the specified destination account
+  ///
+  /// Please note that this is the newest header version, the older version with-fee-rule header will be deprecated by September 30, 2025. Please migrate to this version before the the deprecation date if you are still using with-fee-rule header.
+  ///
+  /// This header is only used if you have access to xenPlatform. See [xenPlatform](https://developers.xendit.co/api-reference/payments-api/#xenplatform) for more information.
+  ///
+  /// `idempotencyKey` Provided to prevent duplicate requests. Can be equal to any UUID. Idempotency keys are stored on the request layer; it expires after 24 hours from the first request. Note: Max 100 characters
   Future<XenditEwalletResponse> initializeLinkingEwallet({
     required XenditEwalletLinkingRequest request,
     String forUserId = "",
@@ -423,9 +554,20 @@ class XenditHttpRequest {
     }
   }
 
+  /// UpdateEwalletPaymentMethod
+  ///
+  /// `id` is the payment method id that you want to update
+  ///
+  /// `request` is the request body, see `XenditUpdateEwalletRequest`
+  ///
+  /// `forUserId` is the sub-account user-id that you want to make this transaction for.
+  ///
+  /// The sub-account user-id that you want to make this transaction for.
+  ///
+  /// This header is only used if you have access to xenPlatform. See [xenPlatform](https://developers.xendit.co/api-reference/payments-api/#xenplatform) for more information
   Future<XenditEwalletResponse> updateEwalletPaymentMethod({
     required String id,
-    required XenditUpdateEwalletRequest data,
+    required XenditUpdateEwalletRequest request,
     String forUserId = "",
   }) async {
     try {
@@ -437,7 +579,7 @@ class XenditHttpRequest {
           },
         ),
         data: jsonEncode(
-          data.toJson(),
+          request.toJson(),
         ),
       );
       return XenditEwalletResponse.fromJson(response.data);
@@ -456,6 +598,17 @@ class XenditHttpRequest {
     }
   }
 
+  /// Expire Payment Method
+  ///
+  /// `id` is the payment method id that you want to expire
+  ///
+  /// `forUserId` is the sub-account user-id that you want to make this transaction for.
+  ///
+  /// The sub-account user-id that you want to make this transaction for.
+  ///
+  /// This header is only used if you have access to xenPlatform. See [xenPlatform](https://developers.xendit.co/api-reference/payments-api/#xenplatform) for more information
+  ///
+  /// `idempotencyKey` Provided to prevent duplicate requests. Can be equal to any UUID. Idempotency keys are stored on the request layer; it expires after 24 hours from the first request. Note: Max 100 characters
   Future<XenditEwalletResponse> expirePaymentMethod({
     required String id,
     String forUserId = "",
@@ -487,6 +640,17 @@ class XenditHttpRequest {
     }
   }
 
+  /// Create Refund
+  ///
+  /// `request` is the request body, see `XenditRefundRequest`
+  ///
+  /// `forUserId` is the sub-account user-id that you want to make this transaction for.
+  ///
+  /// The sub-account user-id that you want to make this transaction for.
+  ///
+  /// This header is only used if you have access to xenPlatform. See [xenPlatform](https://developers.xendit.co/api-reference/payments-api/#xenplatform) for more information
+  ///
+  /// `idempotencyKey` Provided to prevent duplicate requests. Can be equal to any UUID. Idempotency keys are stored on the request layer; it expires after 24 hours from the first request. Note: Max 100 characters
   Future<XenditRefundResponse> createRefund({
     required XenditRefundRequest request,
     String forUserId = "",
@@ -522,7 +686,15 @@ class XenditHttpRequest {
   }
 
   /// Get Refund by id
-  /// [id] is the refund id
+  ///
+  /// `id` is the refund id
+  ///
+  /// `forUserId` is the sub-account user-id that you want to make this transaction for.
+  ///
+  /// The sub-account user-id that you want to make this transaction for.
+  ///
+  /// This header is only used if you have access to xenPlatform. See [xenPlatform](https://developers.xendit.co/api-reference/payments-api/#xenplatform) for more information
+
   Future<XenditRefundResponse> getRefund({
     required String id,
     String forUserId = "",
@@ -537,6 +709,455 @@ class XenditHttpRequest {
         ),
       );
       return XenditRefundResponse.fromJson(response.data);
+    } on DioException catch (e) {
+      return Future.error(
+        XenditException.fromJson(
+          e.response!.data,
+        ),
+      );
+    } catch (e) {
+      return Future.error(
+        XenditException(
+          message: e.toString(),
+        ),
+      );
+    }
+  }
+
+  /// Subsequent Payment with Active Payment Method
+  ///
+  /// `request` is the request body, see `XenditSubSequentPaymentRequest`
+  ///
+  /// `forUserId` is the sub-account user-id that you want to make this transaction for.
+  ///
+  /// The sub-account user-id that you want to make this transaction for.
+  ///
+  /// This header is only used if you have access to xenPlatform. See [xenPlatform](https://developers.xendit.co/api-reference/payments-api/#xenplatform) for more information
+  ///
+  /// `withSplitRule` Split Rule ID that you would like to apply to this Payment Request in order to split and route payments to multiple accounts.
+  ///
+  /// Please note: If you include this parameter, we will return the split_rule_id in the header of the API response.
+  ///
+  /// If for-user-id header is not present, Split Rule will still be routed from platform account to the specified destination account
+  ///
+  /// Please note that this is the newest header version, the older version with-fee-rule header will be deprecated by September 30, 2025. Please migrate to this version before the the deprecation date if you are still using with-fee-rule header.
+  ///
+  /// This header is only used if you have access to xenPlatform. See [xenPlatform](https://developers.xendit.co/api-reference/payments-api/#xenplatform) for more information.
+  ///
+  /// `idempotencyKey` Provided to prevent duplicate requests. Can be equal to any UUID. Idempotency keys are stored on the request layer; it expires after 24 hours from the first request. Note: Max 100 characters
+  Future<XenditRequestPaymentResponse> subSequentWithActivePayment({
+    required XenditSubSequentPaymentRequest request,
+    String forUserId = "",
+    String idempotencyKey = "",
+    String withSplitRule = "",
+  }) async {
+    try {
+      Response response = await _dio.post(
+        _endpoint.paymentRequest(),
+        data: jsonEncode(
+          request.toJson(),
+        ),
+        options: Options(
+          headers: {
+            if (forUserId.isNotEmpty) "for-user-id": forUserId,
+            if (idempotencyKey.isNotEmpty) "idempotency-Key": idempotencyKey,
+            if (withSplitRule.isNotEmpty) "with-split-rule": withSplitRule,
+          },
+        ),
+      );
+      return XenditRequestPaymentResponse.fromJson(response.data);
+    } on DioException catch (e) {
+      return Future.error(
+        XenditException.fromJson(
+          e.response!.data,
+        ),
+      );
+    } catch (e) {
+      return Future.error(
+        XenditException(
+          message: e.toString(),
+        ),
+      );
+    }
+  }
+
+  /// Initialize Linking and Pay
+  ///
+  /// `request` is the request body, see `XenditInitializeAndPayRequest`
+  ///
+  /// `forUserId` is the sub-account user-id that you want to make this transaction for.
+  ///
+  /// The sub-account user-id that you want to make this transaction for.
+  ///
+  /// This header is only used if you have access to xenPlatform. See [xenPlatform](https://developers.xendit.co/api-reference/payments-api/#xenplatform) for more information
+  ///
+  /// `withSplitRule` Split Rule ID that you would like to apply to this Payment Request in order to split and route payments to multiple accounts.
+  ///
+  /// Please note: If you include this parameter, we will return the split_rule_id in the header of the API response.
+  ///
+  /// If for-user-id header is not present, Split Rule will still be routed from platform account to the specified destination account
+  ///
+  /// Please note that this is the newest header version, the older version with-fee-rule header will be deprecated by September 30, 2025. Please migrate to this version before the the deprecation date if you are still using with-fee-rule header.
+  ///
+  /// This header is only used if you have access to xenPlatform. See [xenPlatform](https://developers.xendit.co/api-reference/payments-api/#xenplatform) for more information.
+  ///
+  /// `idempotencyKey` Provided to prevent duplicate requests. Can be equal to any UUID. Idempotency keys are stored on the request layer; it expires after 24 hours from the first request. Note: Max 100 characters
+  Future<XenditRequestPaymentResponse> initializeLinkingAndPay({
+    required XenditInitializeAndPayRequest request,
+    String forUserId = "",
+    String idempotencyKey = "",
+    String withSplitRule = "",
+  }) async {
+    try {
+      Response response = await _dio.post(
+        _endpoint.paymentRequest(),
+        data: jsonEncode(
+          request.toJson(),
+        ),
+        options: Options(
+          headers: {
+            if (forUserId.isNotEmpty) "for-user-id": forUserId,
+            if (idempotencyKey.isNotEmpty) "idempotency-Key": idempotencyKey,
+            if (withSplitRule.isNotEmpty) "with-split-rule": withSplitRule,
+          },
+        ),
+      );
+      return XenditRequestPaymentResponse.fromJson(response.data);
+    } on DioException catch (e) {
+      return Future.error(
+        XenditException.fromJson(
+          e.response!.data,
+        ),
+      );
+    } catch (e) {
+      return Future.error(
+        XenditException(
+          message: e.toString(),
+        ),
+      );
+    }
+  }
+
+  /// Create Report
+  ///
+  /// `request` is the request body, see `XenditReportRequest`
+  ///
+  /// `forUserId` is the sub-account user-id that you want to make this transaction for.
+  ///
+  /// The sub-account user-id that you want to make this transaction for.
+  ///
+  /// This header is only used if you have access to xenPlatform. See [xenPlatform](https://developers.xendit.co/api-reference/payments-api/#xenplatform) for more information
+  Future<XenditReportResponse> createReport({
+    required XenditReportRequest request,
+    String forUserId = "",
+  }) async {
+    try {
+      Response response = await _dio.post(
+        _endpoint.createReport(),
+        data: jsonEncode(
+          request.toJson(),
+        ),
+        options: Options(
+          headers: {
+            if (forUserId.isNotEmpty) "for-user-id": forUserId,
+          },
+        ),
+      );
+      return XenditReportResponse.fromJson(response.data);
+    } on DioException catch (e) {
+      return Future.error(
+        XenditException.fromJson(
+          e.response!.data,
+        ),
+      );
+    } catch (e) {
+      return Future.error(
+        XenditException(
+          message: e.toString(),
+        ),
+      );
+    }
+  }
+
+  /// Get Report by id
+  ///
+  /// `id` is the report id that you want to get
+  ///
+  /// `forUserId` is the sub-account user-id that you want to make this transaction for.
+  ///
+  /// The sub-account user-id that you want to make this transaction for.
+  ///
+  /// This header is only used if you have access to xenPlatform. See [xenPlatform](https://developers.xendit.co/api-reference/payments-api/#xenplatform) for more information
+
+  Future<XenditReportResponse> getReportById({
+    required String id,
+    String forUserId = "",
+  }) async {
+    try {
+      Response response = await _dio.get(
+        _endpoint.getReport(id),
+        options: Options(
+          headers: {
+            if (forUserId.isNotEmpty) "for-user-id": forUserId,
+          },
+        ),
+      );
+      return XenditReportResponse.fromJson(response.data);
+    } on DioException catch (e) {
+      return Future.error(
+        XenditException.fromJson(
+          e.response!.data,
+        ),
+      );
+    } catch (e) {
+      return Future.error(
+        XenditException(
+          message: e.toString(),
+        ),
+      );
+    }
+  }
+
+  /// Create QR Codes Payment
+  ///
+  /// `request` is the request body, see `XenditQrCodesRequest`
+  ///
+  /// `forUserId` is the sub-account user-id that you want to make this transaction for.
+  ///
+  /// The sub-account user-id that you want to make this transaction for.
+  ///
+  /// This header is only used if you have access to xenPlatform. See [xenPlatform](https://developers.xendit.co/api-reference/payments-api/#xenplatform) for more information
+  ///
+  /// `withSplitRule` Split Rule ID that you would like to apply to this Payment Request in order to split and route payments to multiple accounts.
+  ///
+  /// Please note: If you include this parameter, we will return the split_rule_id in the header of the API response.
+  ///
+  /// If for-user-id header is not present, Split Rule will still be routed from platform account to the specified destination account
+  ///
+  /// Please note that this is the newest header version, the older version with-fee-rule header will be deprecated by September 30, 2025. Please migrate to this version before the the deprecation date if you are still using with-fee-rule header.
+  ///
+  /// This header is only used if you have access to xenPlatform. See [xenPlatform](https://developers.xendit.co/api-reference/payments-api/#xenplatform) for more information.
+  ///
+  /// `idempotencyKey` Provided to prevent duplicate requests. Can be equal to any UUID. Idempotency keys are stored on the request layer; it expires after 24 hours from the first request. Note: Max 100 characters
+  ///
+  /// `apiVersion` The API version that will be used to process the request.
+  ///
+  /// `2022-07-31` Latest	v2 QR Codes API to support customized expiry time of a dynamic QR code
+  ///
+  /// `2020-07-01` Previous version	v1 QR Codes API without customized expiry time of a dynamic QR code
+  ///
+  /// `webhookUrl` Callback URL where payment notifications will be sent. Default is the callback URL in your Dashboard for `QR code paid`
+  Future<XenditQrCodesResponse> createQrCodesPayment({
+    required XenditQrCodesRequest request,
+    String forUserId = "",
+    String idempotencyKey = "",
+    String withSplitRule = "",
+    String apiVersion = "2022-07-31",
+    String webhookUrl = "",
+  }) async {
+    try {
+      Response response = await _dio.post(
+        _endpoint.createQRCodePayment(),
+        data: jsonEncode(
+          request.toJson(),
+        ),
+        options: Options(
+          headers: {
+            // "api-version": "2022-07-31",
+            if (forUserId.isNotEmpty) "for-user-id": forUserId,
+            if (idempotencyKey.isNotEmpty) "idempotency-key": idempotencyKey,
+            if (withSplitRule.isNotEmpty) "with-split-rule": withSplitRule,
+            if (apiVersion.isNotEmpty) "api-version": apiVersion,
+            if (webhookUrl.isNotEmpty) "webhook-url": webhookUrl,
+          },
+        ),
+      );
+      return XenditQrCodesResponse.fromJson(response.data);
+    } on DioException catch (e) {
+      return Future.error(
+        XenditException.fromJson(
+          e.response!.data,
+        ),
+      );
+    } catch (e) {
+      return Future.error(
+        XenditException(
+          message: e.toString(),
+        ),
+      );
+    }
+  }
+
+  /// Get QR Codes Payment by id
+  ///
+  /// QR codes payment instrument allows you to receive payments directly from end user's mobile banking app balance or eWallet balance. In Indonesia, our merchants can receive payments from any providers connected on QRIS network (e.g. OVO, GoPay, DANA, LinkAja, BCA, and ShopeePay). See full list [here](https://www.aspi-indonesia.or.id/standar-dan-layanan/qris/).
+  ///
+  /// `id` is the QR code id that you want to get
+  ///
+  /// `forUserId` is the sub-account user-id that you want to make this transaction for.
+  ///
+  /// The sub-account user-id that you want to make this transaction for.
+  ///
+  /// This header is only used if you have access to xenPlatform. See [xenPlatform](https://developers.xendit.co/api-reference/payments-api/#xenplatform) for more information
+  ///
+  /// `apiVersion` The API version that will be used to process the request.
+  ///
+  /// `2022-07-31` Latest	v2 QR Codes API to support customized expiry time of a dynamic QR code
+  ///
+  /// `2020-07-01` Previous version	v1 QR Codes API without customized expiry time of a dynamic QR code
+  Future<XenditQrCodesResponse> getQrCodesPaymentById({
+    required String id,
+    String forUserId = "",
+    String apiVersion = "2022-07-31",
+  }) async {
+    try {
+      Response response = await _dio.get(
+        _endpoint.getQRCodePaymentByID(id),
+        options: Options(
+          headers: {
+            "api-version": "2022-07-31",
+            if (forUserId.isNotEmpty) "for-user-id": forUserId,
+            if (apiVersion.isNotEmpty) "api-version": apiVersion,
+          },
+        ),
+      );
+      return XenditQrCodesResponse.fromJson(response.data);
+    } on DioException catch (e) {
+      return Future.error(
+        XenditException.fromJson(
+          e.response!.data,
+        ),
+      );
+    } catch (e) {
+      return Future.error(
+        XenditException(
+          message: e.toString(),
+        ),
+      );
+    }
+  }
+
+  /// Create Virtual Account Payment
+  ///
+  /// Virtual Accounts are virtual bank accounts that can be created and assigned to your customers and act as medium to receive payments where your customers will pay via Bank Transfer.
+  ///
+  /// `request` is the request body, see `XenditFvaPaymentRequest`
+  ///
+  /// `forUserId` is the sub-account user-id that you want to make this transaction for.
+  ///
+  /// The sub-account user-id that you want to make this transaction for.
+  ///
+  /// This header is only used if you have access to xenPlatform. See [xenPlatform](https://developers.xendit.co/api-reference/payments-api/#xenplatform) for more information
+  ///
+  /// `withSplitRule` Split Rule ID that you would like to apply to this Payment Request in order to split and route payments to multiple accounts.
+  ///
+  /// Please note: If you include this parameter, we will return the split_rule_id in the header of the API response.
+  ///
+  /// If for-user-id header is not present, Split Rule will still be routed from platform account to the specified destination account
+  ///
+  /// Please note that this is the newest header version, the older version with-fee-rule header will be deprecated by September 30, 2025. Please migrate to this version before the the deprecation date if you are still using with-fee-rule header.
+  ///
+  /// This header is only used if you have access to xenPlatform. See [xenPlatform](https://developers.xendit.co/api-reference/payments-api/#xenplatform) for more information.
+  Future<XenditFvaPaymentResponse> createFVAPayment({
+    required XenditFvaPaymentRequest request,
+    String forUserId = "",
+    String withSplitRule = "",
+  }) async {
+    try {
+      Response response = await _dio.post(
+        _endpoint.createFixedVirtualAccount(),
+        data: jsonEncode(
+          request.toJson(),
+        ),
+        options: Options(
+          headers: {
+            if (forUserId.isNotEmpty) "for-user-id": forUserId,
+            if (withSplitRule.isNotEmpty) "with-split-rule": withSplitRule,
+          },
+        ),
+      );
+      return XenditFvaPaymentResponse.fromJson(response.data);
+    } on DioException catch (e) {
+      return Future.error(
+        XenditException.fromJson(
+          e.response!.data,
+        ),
+      );
+    } catch (e) {
+      return Future.error(
+        XenditException(
+          message: e.toString(),
+        ),
+      );
+    }
+  }
+
+  /// Create Virtual Account Payment
+  ///
+  /// `request` is the request body, see `XenditFvaPaymentRequest`
+  ///
+  /// `forUserId` is the sub-account user-id that you want to make this transaction for.
+  ///
+  /// The sub-account user-id that you want to make this transaction for.
+  ///
+  /// This header is only used if you have access to xenPlatform. See [xenPlatform](https://developers.xendit.co/api-reference/payments-api/#xenplatform) for more information
+  Future<XenditFvaPaymentResponse> getFVAPaymentById({
+    required String id,
+    String forUserId = "",
+  }) async {
+    try {
+      Response response = await _dio.get(
+        _endpoint.getFixedVirtualAccount(id),
+        options: Options(
+          headers: {
+            if (forUserId.isNotEmpty) "for-user-id": forUserId,
+          },
+        ),
+      );
+      return XenditFvaPaymentResponse.fromJson(response.data);
+    } on DioException catch (e) {
+      return Future.error(
+        XenditException.fromJson(
+          e.response!.data,
+        ),
+      );
+    } catch (e) {
+      return Future.error(
+        XenditException(
+          message: e.toString(),
+        ),
+      );
+    }
+  }
+
+  /// Patch Virtual Account Payment
+  ///
+  /// Update Virtual Account API allows you to update Virtual Account type and information according to your business need. You can update VA when the VA status is `ACTIVE`. API will throw error when you update `INACTIVE` VA.
+  ///
+  /// `request` is the request body, see `XenditPatchFvaPaymentRequest`
+  ///
+  /// `forUserId` is the sub-account user-id that you want to make this transaction for.
+  ///
+  /// The sub-account user-id that you want to make this transaction for.
+  ///
+  /// This header is only used if you have access to xenPlatform. See [xenPlatform](https://developers.xendit.co/api-reference/payments-api/#xenplatform) for more information
+  Future<XenditFvaPaymentResponse> patchFVAPayment(
+      {required String id,
+      required XenditPatchFvaPaymentRequest request,
+      String forUserId = ""}) async {
+    try {
+      Response response = await _dio.patch(
+        _endpoint.patchFixedVirtualAccount(id),
+        data: jsonEncode(
+          request.toJson(),
+        ),
+        options: Options(
+          headers: {
+            if (forUserId.isNotEmpty) "for-user-id": forUserId,
+          },
+        ),
+      );
+      return XenditFvaPaymentResponse.fromJson(response.data);
     } on DioException catch (e) {
       return Future.error(
         XenditException.fromJson(

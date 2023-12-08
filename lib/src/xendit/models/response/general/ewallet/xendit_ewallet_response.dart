@@ -9,7 +9,10 @@ import 'package:sucrose/src/xendit/models/entity/xendit_retail_outlet.dart';
 import 'package:sucrose/src/xendit/models/entity/xendit_virtual_account.dart';
 
 class XenditEwalletResponse {
+  /// Unique identifier for the payment. Its prefix varies based on the payment method type.
   final String? id;
+
+  ///
   final String? type;
   final String? country;
   final String? businessId;

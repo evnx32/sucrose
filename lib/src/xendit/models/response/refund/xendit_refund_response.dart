@@ -1,16 +1,4 @@
-// To parse this JSON data, do
-//
-//     final xenditRefundResponse = xenditRefundResponseFromJson(jsonString);
-
-import 'dart:convert';
-
 import 'package:sucrose/src/xendit/models/xendit_models.dart';
-
-XenditRefundResponse xenditRefundResponseFromJson(String str) =>
-    XenditRefundResponse.fromJson(json.decode(str));
-
-String xenditRefundResponseToJson(XenditRefundResponse data) =>
-    json.encode(data.toJson());
 
 class XenditRefundResponse {
   final String? id;

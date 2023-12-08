@@ -11,7 +11,7 @@ class XenditQrCode {
   /// VND - Only supports positive integers.
   ///
   /// THB - Supports up to two decimal places.
-  final int? amount;
+  final double? amount;
 
   /// ISO 4217 three-letter code of the transaction's currency. Will be auto-filled based on the channel_code if not provided.
   final XenditQRCurrency currency;

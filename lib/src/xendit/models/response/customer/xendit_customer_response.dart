@@ -6,44 +6,109 @@ import 'package:sucrose/src/xendit/models/entity/xendit_kyc_document.dart';
 import 'package:sucrose/src/xendit/models/entity/xendit_metadata.dart';
 
 class XenditCustomerResponse {
-  final String? type;
-  final String? dateOfRegistration;
-  final String? email;
-  final String? mobileNumber;
-  final String? phoneNumber;
-  final DateTime? created;
-  final DateTime? updated;
-  final String? description;
-  final String? hashedPhoneNumber;
-  final String? domicileOfRegistration;
-  final List<XenditKycDocument>? kycDocuments;
+  /// Xendit-generated Customer ID. Will start with `cust-...`
   final String? id;
-  final String? referenceId;
-  final XenditMetadata? metadata;
-  final XenditIndividualDetail? individualDetail;
-  final XenditBusinessDetail? businessDetail;
-  final List<XenditAddresses>? addresses;
-  final List<XenditIdentityAccountType>? identityAccounts;
 
+  /// Merchant-provided identifier for the customer
+  final String referenceId;
+
+  /// Type of customer.
+  /// Supported values: `INDIVIDUAL`, `BUSINESS`
+  final String type;
+
+  /// Date of which the account that the shopper had to create/sign up on the merchant’s website
+  ///
+  /// `Format` YYYY-MM-DD string
+  final String? dateOfRegistration;
+
+  /// E-mail address of customer
+  ///
+  /// `Maximum` length 50 characters
+  final String? email;
+
+  /// Mobile number of customer in E.164 format
+  ///
+  /// `Maximum` length 50 characters
+  final String? mobileNumber;
+
+  /// Additional contact number of customer in E.164 format. May be a landline
+
+  /// `Maximum` length 50 characters
+
+  /// `Format` E.164 international standard +(country code)(subscriber number)
+  final String? phoneNumber;
+
+  /// Timestamp of customer creation in ISO format
+  final DateTime created;
+
+  /// 	Timestamp of customer update in ISO format
+  final DateTime updated;
+
+  /// Merchant-provided description for the customer.
+
+  /// `Maximum` length 500 characters
+  final String? description;
+
+  /// Hashed phone number
+
+  /// `Maximum` length 255 characters
+  final String? hashedPhoneNumber;
+
+  /// Country within which the account that the shopper had to create/sign up on the merchant’s website resides (e.g. accounts created on Shopee SG have SG as the value for this field.
+
+  /// Format ISO 3166-2 Country Code
+  final String? domicileOfRegistration;
+
+  /// Array of JSON objects with documents collected for KYC of this customer.
+  final List<XenditKycDocument> kycDocuments;
+
+  /// Object containing key-value pairs of additional information about the customer.
+  final XenditMetadata? metadata;
+
+  /// Object containing details of the individual. Will be null if type is not `INDIVIDUAL`
+  final XenditIndividualDetail? individualDetail;
+
+  /// JSON object containing details of the business. Will be null if type is not `BUSINESS`
+  final XenditBusinessDetail? businessDetail;
+
+  /// Array of address JSON objects containing the customer's various address information.
+  final List<XenditAddresses>? addresses;
+
+  /// Array of JSON objects with information relating to financial, social media or other accounts associated with the customer. This array can store details for KYC purposes and can support storing of account details for execution of payments within the Xendit API ecosystem.
+  final List<XenditIdentityAccountType> identityAccounts;
+
+  /// The Customer Object is a standard data structure to hold information relating to one of your customers. It has the following major components:
+  ///
+  /// A Type of customer (Individual or Business)
+  ///
+  /// Basic descriptive details of that customer
+  ///
+  /// Addresses of the customer
+  ///
+  /// Identity accounts and KYC documents to prove the legitimacy of the customer
+  ///
+  /// Other metadata
+  ///
+  /// When one (or more) customers is returned by endpoints in this section, the response body will contain a Customer Object (or an array of Customer Objects).
   XenditCustomerResponse({
-    this.type,
+    this.id,
+    required this.referenceId,
+    required this.type,
     this.dateOfRegistration,
     this.email,
     this.mobileNumber,
     this.phoneNumber,
-    this.created,
-    this.updated,
+    required this.created,
+    required this.updated,
     this.description,
     this.hashedPhoneNumber,
     this.domicileOfRegistration,
-    this.kycDocuments,
-    this.id,
-    this.referenceId,
+    required this.kycDocuments,
     this.metadata,
     this.individualDetail,
     this.businessDetail,
     this.addresses,
-    this.identityAccounts,
+    required this.identityAccounts,
   });
 
   factory XenditCustomerResponse.fromJson(Map<String, dynamic> json) =>
@@ -53,10 +118,8 @@ class XenditCustomerResponse {
         email: json["email"],
         mobileNumber: json["mobile_number"],
         phoneNumber: json["phone_number"],
-        created:
-            json["created"] == null ? null : DateTime.parse(json["created"]),
-        updated:
-            json["updated"] == null ? null : DateTime.parse(json["updated"]),
+        created: DateTime.parse(json["created"]),
+        updated: DateTime.parse(json["updated"]),
         description: json["description"],
         hashedPhoneNumber: json["hashed_phone_number"],
         domicileOfRegistration: json["domicile_of_registration"],
@@ -81,32 +144,4 @@ class XenditCustomerResponse {
             : List<XenditIdentityAccountType>.from(
                 json["identity_accounts"]!.map((x) => x)),
       );
-
-  Map<String, dynamic> toJson() => {
-        "type": type,
-        "date_of_registration": dateOfRegistration,
-        "email": email,
-        "mobile_number": mobileNumber,
-        "phone_number": phoneNumber,
-        "created": created?.toIso8601String(),
-        "updated": updated?.toIso8601String(),
-        "description": description,
-        "hashed_phone_number": hashedPhoneNumber,
-        "domicile_of_registration": domicileOfRegistration,
-        "kyc_documents": kycDocuments == null
-            ? []
-            : List<dynamic>.from(kycDocuments!.map((x) => x)),
-        "id": id,
-        "reference_id": referenceId,
-        "metadata": metadata?.toJson() ?? {},
-        "individual_detail": individualDetail?.toJson(),
-        "business_detail": businessDetail?.toJson() ?? {},
-        "addresses": addresses == null
-            ? []
-            : List<XenditAddresses>.from(addresses!.map((x) => x)),
-        "identity_accounts": identityAccounts == null
-            ? []
-            : List<XenditIdentityAccountType>.from(
-                identityAccounts!.map((x) => x)),
-      };
 }

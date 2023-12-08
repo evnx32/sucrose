@@ -1,20 +1,5 @@
-// To parse this JSON data, do
-//
-//     final xenditPaymentRequestByIdResponse = xenditPaymentRequestByIdResponseFromJson(jsonString);
-
-import 'dart:convert';
-
 import 'package:sucrose/src/xendit/models/entity/xendit_payment_method.dart';
-
 import '../../entity/xendit_metadata.dart';
-
-XenditPaymentRequestByIdResponse xenditPaymentRequestByIdResponseFromJson(
-        String str) =>
-    XenditPaymentRequestByIdResponse.fromJson(json.decode(str));
-
-String xenditPaymentRequestByIdResponseToJson(
-        XenditPaymentRequestByIdResponse data) =>
-    json.encode(data.toJson());
 
 class XenditPaymentRequestByIdResponse {
   final String? id;

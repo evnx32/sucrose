@@ -1,23 +1,11 @@
-// To parse this JSON data, do
-//
-//     final xenditRequestPayment = xenditRequestPaymentFromJson(jsonString);
-
-import 'dart:convert';
-
 import 'package:sucrose/src/xendit/enums/enums.dart';
 import 'package:sucrose/src/xendit/models/entity/xendit_invoice_customer.dart';
 import 'package:sucrose/src/xendit/models/request/request_payment/xendit_payment_method_request.dart';
 
 import '../../entity/xendit_metadata.dart';
 
-XenditRequestPayment xenditRequestPaymentFromJson(String str) =>
-    XenditRequestPayment.fromJson(json.decode(str));
-
-String xenditRequestPaymentToJson(XenditRequestPayment data) =>
-    json.encode(data.toJson());
-
 class XenditRequestPayment {
-  final int amount;
+  final double amount;
   final XenditCurrency currency;
   final XenditPaymentMethodRequest paymentMethod;
   final String? description;

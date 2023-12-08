@@ -1,19 +1,10 @@
-// To parse this JSON data, do
-//
-//     final xenditQrResponse = xenditQrResponseFromJson(jsonString);
-
-import 'dart:convert';
-
+import 'package:sucrose/src/xendit/models/entity/channel_properties/xendit_channel_properties.dart';
+import 'package:sucrose/src/xendit/models/entity/xendit_actions.dart';
+import 'package:sucrose/src/xendit/models/entity/xendit_card.dart';
 import 'package:sucrose/src/xendit/models/entity/xendit_item.dart';
 import 'package:sucrose/src/xendit/models/entity/xendit_metadata.dart';
-
-import '../../entity/xendit_payment_method.dart';
-
-XenditRequestPaymentResponse xenditQrResponseFromJson(String str) =>
-    XenditRequestPaymentResponse.fromJson(json.decode(str));
-
-String xenditQrResponseToJson(XenditRequestPaymentResponse data) =>
-    json.encode(data.toJson());
+import 'package:sucrose/src/xendit/models/entity/xendit_payment_method.dart';
+import 'package:sucrose/src/xendit/models/entity/xendit_shipping_information.dart';
 
 class XenditRequestPaymentResponse {
   final String? id;
@@ -27,15 +18,15 @@ class XenditRequestPaymentResponse {
   final XenditMetadata? metadata;
   final String? customerId;
   final String? captureMethod;
-  final dynamic initiator;
-  final dynamic cardVerificationResults;
+  final String? initiator;
+  final CardVerificationResults? cardVerificationResults;
   final DateTime? created;
   final DateTime? updated;
   final String? status;
-  final List<dynamic>? actions;
-  final dynamic failureCode;
-  final dynamic channelProperties;
-  final dynamic shippingInformation;
+  final List<XenditActions>? actions;
+  final String? failureCode;
+  final XenditChannelProperties? channelProperties;
+  final XenditShippingInformation? shippingInformation;
   final List<XenditItem>? items;
 
   XenditRequestPaymentResponse({
@@ -88,11 +79,19 @@ class XenditRequestPaymentResponse {
         status: json["status"],
         actions: json["actions"] == null
             ? []
-            : List<dynamic>.from(json["actions"]!.map((x) => x)),
+            : List<XenditActions>.from(
+                json["actions"]!.map((x) => XenditActions.fromJson(x))),
         failureCode: json["failure_code"],
-        channelProperties: json["channel_properties"],
-        shippingInformation: json["shipping_information"],
-        items: json["items"],
+        channelProperties: json["channel_properties"] == null
+            ? null
+            : XenditChannelProperties.fromJson(json["channel_properties"]),
+        shippingInformation: json["shipping_information"] == null
+            ? null
+            : XenditShippingInformation.fromJson(json["shipping_information"]),
+        items: json["items"] == null
+            ? null
+            : List<XenditItem>.from(
+                json["items"].map((x) => XenditItem.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -112,11 +111,12 @@ class XenditRequestPaymentResponse {
         "created": created?.toIso8601String(),
         "updated": updated?.toIso8601String(),
         "status": status,
-        "actions":
-            actions == null ? [] : List<dynamic>.from(actions!.map((x) => x)),
+        "actions": actions == null
+            ? []
+            : List<dynamic>.from(actions!.map((x) => x.toJson())),
         "failure_code": failureCode,
-        "channel_properties": channelProperties,
-        "shipping_information": shippingInformation,
+        "channel_properties": channelProperties?.toJson(),
+        "shipping_information": shippingInformation?.toJson(),
         "items": items,
       };
 }

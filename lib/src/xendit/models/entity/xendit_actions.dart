@@ -21,12 +21,16 @@ class XenditActions {
   /// The generated URL to hit in order to perform the action
   final String? url;
 
+  /// The generated QR code to be scanned by the end user in order to perform the action
+  final String? qrCode;
+
   /// If status=REQUIRES_ACTION, this contains objects that detail the possible next steps in order to complete a payment. Only one of the provided actions is required to be fulfilled. If no further action is needed, this parameter will be an empty array [].
   XenditActions({
     this.method,
     this.urlType,
     this.action,
     this.url,
+    this.qrCode,
   });
 
   factory XenditActions.fromJson(Map<String, dynamic> json) => XenditActions(
@@ -34,12 +38,14 @@ class XenditActions {
         urlType: json["url_type"],
         action: json["action"],
         url: json["url"],
+        qrCode: json["qr_code"],
       );
 
   Map<String, dynamic> toJson() => {
-        "method": method,
-        "url_type": urlType,
-        "action": action,
-        "url": url,
+        if (method != null) "method": method,
+        if (urlType != null) "url_type": urlType,
+        if (action != null) "action": action,
+        if (url != null) "url": url,
+        if (qrCode != null) "qr_code": qrCode,
       };
 }

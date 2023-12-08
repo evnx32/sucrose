@@ -9,7 +9,7 @@ class XenditVirtualAccount {
   /// IDR - Only supports positive integers.
   ///
   /// VND - Only supports positive integers.
-  final int? amount;
+  final double? amount;
 
   /// ISO 4217 three-letter code of the transaction's currency. Will be auto-filled based on the channel_code if not provided.
   final XenditCurrency currency;

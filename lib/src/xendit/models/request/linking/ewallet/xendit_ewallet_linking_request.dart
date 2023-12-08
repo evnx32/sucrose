@@ -51,6 +51,7 @@ class XenditEwalletLinkingRequest {
   /// This is optional, for more info, see https://developers.xendit.co/api-reference/
   final XenditMetadata? metadata;
 
+  ///   /// Object that contains the required information to perform linking ewallet
   XenditEwalletLinkingRequest({
     this.referenceId,
     required this.type,

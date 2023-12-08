@@ -1,15 +1,8 @@
-import 'dart:convert';
 import 'package:sucrose/src/xendit/models/entity/xendit_invoice_customer.dart';
 import 'package:sucrose/src/xendit/models/entity/xendit_invoice_item.dart';
 
 import '../../entity/xendit_customer_notification_preference.dart';
 import '../../entity/xendit_fee.dart';
-
-XenditInvoiceResponse temperaturesFromJson(String str) =>
-    XenditInvoiceResponse.fromJson(json.decode(str));
-
-String temperaturesToJson(XenditInvoiceResponse data) =>
-    json.encode(data.toJson());
 
 class XenditInvoiceResponse {
   final String? id;

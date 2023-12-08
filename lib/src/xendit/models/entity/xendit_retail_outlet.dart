@@ -7,7 +7,7 @@ class XenditRetailOutlet {
   /// If amount is not provided, the corresponding payment code will accept any amount as payment (open amount).
   ///
   /// so if you want to use OPEN amount, dont use this
-  final int? amount;
+  final double? amount;
 
   /// ISO 4217 three-letter code of the transaction's currency. Will be auto-filled based on the channel_code if not provided.
   final XenditOTCCurrency currency;
