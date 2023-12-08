@@ -13,6 +13,30 @@ enum XenditPaymentMethodType {
 
 enum XenditQRChannelCode { DANA, LINKAJA, PROMPTPAY }
 
+enum XenditEwalletPaymentChannelCode {
+  ID_OVO,
+  ID_DANA,
+  ID_LINKAJA,
+  ID_SHOPEEPAY,
+  ID_ASTRAPAY,
+  ID_JENIUSPAY,
+  ID_SAKUKU,
+  PH_PAYMAYA,
+  PH_GCASH,
+  PH_GRABPAY,
+  PH_SHOPEEPAY,
+  VN_APPOTA,
+  VN_MOMO,
+  VN_SHOPEEPAY,
+  VN_VNPTWALLET,
+  VN_VIETTELPAY,
+  VN_ZALOPAY,
+  TH_WECHATPAY,
+  TH_LINEPAY,
+  TH_TRUEMONEY,
+  TH_SHOPEEPAY
+}
+
 enum XenditEWalletCode {
   DANA,
   OVO,
