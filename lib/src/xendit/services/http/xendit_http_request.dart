@@ -388,7 +388,7 @@ class XenditHttpRequest {
   /// The sub-account user-id that you want to make this transaction for.
   ///
   /// This header is only used if you have access to xenPlatform. See [xenPlatform](https://developers.xendit.co/api-reference/payments-api/#xenplatform) for more information
-  Future<XenditPaymentMethodByIdResponse> getMethodPaymentById({
+  Future<XenditPaymentMethodByIdResponse> getPaymentMethodById({
     required String id,
     String forUserId = "",
   }) async {
@@ -695,7 +695,7 @@ class XenditHttpRequest {
   ///
   /// This header is only used if you have access to xenPlatform. See [xenPlatform](https://developers.xendit.co/api-reference/payments-api/#xenplatform) for more information
 
-  Future<XenditRefundResponse> getRefund({
+  Future<XenditRefundResponse> getRefundById({
     required String id,
     String forUserId = "",
   }) async {
@@ -1037,6 +1037,38 @@ class XenditHttpRequest {
     }
   }
 
+  /// Refund QR Codes Payment
+  ///
+  /// `id` is the payment id, starts with `qrpy_`
+  ///
+  /// `request` is the request body, see
+  Future<XenditPaymentRefundResponse> refundQrCodesPayment({
+    required String id,
+    required XenditPaymentRefundRequest request,
+  }) async {
+    try {
+      Response response = await _dio.post(
+        _endpoint.refundQRCodePayment(id),
+        data: jsonEncode(
+          request.toJson(),
+        ),
+      );
+      return XenditPaymentRefundResponse.fromJson(response.data);
+    } on DioException catch (e) {
+      return Future.error(
+        XenditException.fromJson(
+          e.response!.data,
+        ),
+      );
+    } catch (e) {
+      return Future.error(
+        XenditException(
+          message: e.toString(),
+        ),
+      );
+    }
+  }
+
   /// Create Virtual Account Payment
   ///
   /// Virtual Accounts are virtual bank accounts that can be created and assigned to your customers and act as medium to receive payments where your customers will pay via Bank Transfer.
@@ -1158,6 +1190,127 @@ class XenditHttpRequest {
         ),
       );
       return XenditFvaPaymentResponse.fromJson(response.data);
+    } on DioException catch (e) {
+      return Future.error(
+        XenditException.fromJson(
+          e.response!.data,
+        ),
+      );
+    } catch (e) {
+      return Future.error(
+        XenditException(
+          message: e.toString(),
+        ),
+      );
+    }
+  }
+
+  /// Create ewallet payment
+  ///
+  /// `request` is the request body, see
+  ///
+  /// `forUserId` is the sub-account user-id that you want to make this transaction for.
+  ///
+  /// The sub-account user-id that you want to make this transaction for.
+  ///
+  /// This header is only used if you have access to xenPlatform. See [xenPlatform](https://developers.xendit.co/api-reference/payments-api/#xenplatform) for more information
+  ///
+  /// `withSplitRule` Split Rule ID that you would like to apply to this Payment Request in order to split and route payments to multiple accounts.
+  ///
+  /// Please note: If you include this parameter, we will return the split_rule_id in the header of the API response.
+  ///
+  /// If for-user-id header is not present, Split Rule will still be routed from platform account to the specified destination account
+  ///
+  /// Please note that this is the newest header version, the older version with-fee-rule header will be deprecated by September 30, 2025. Please migrate to this version before the the deprecation date if you are still using with-fee-rule header.
+  Future<XenditEwalletPaymentResponse> createEwalletPayment({
+    required XenditEwalletPaymentRequest request,
+    String forUserId = "",
+    String withSplitRule = "",
+  }) async {
+    try {
+      Response response = await _dio.post(
+        _endpoint.createEwalletPayment(),
+        data: jsonEncode(
+          request.toJson(),
+        ),
+        options: Options(
+          headers: {
+            if (forUserId.isNotEmpty) "for-user-id": forUserId,
+            if (withSplitRule.isNotEmpty) "with-split-rule": withSplitRule,
+          },
+        ),
+      );
+      return XenditEwalletPaymentResponse.fromJson(response.data);
+    } on DioException catch (e) {
+      return Future.error(
+        XenditException.fromJson(
+          e.response!.data,
+        ),
+      );
+    } catch (e) {
+      return Future.error(
+        XenditException(
+          message: e.toString(),
+        ),
+      );
+    }
+  }
+
+  /// Create ewallet payment
+  ///
+  /// `request` is the request body, see
+  ///
+  /// `forUserId` is the sub-account user-id that you want to make this transaction for.
+  ///
+  /// The sub-account user-id that you want to make this transaction for.
+  ///
+  /// This header is only used if you have access to xenPlatform. See [xenPlatform](https://developers.xendit.co/api-reference/payments-api/#xenplatform) for more information
+  Future<XenditEwalletPaymentResponse> getEwalletPaymentById({
+    required String id,
+    String forUserId = "",
+  }) async {
+    try {
+      Response response = await _dio.get(
+        _endpoint.getEwalletPayment(id),
+        options: Options(
+          headers: {
+            if (forUserId.isNotEmpty) "for-user-id": forUserId,
+          },
+        ),
+      );
+      return XenditEwalletPaymentResponse.fromJson(response.data);
+    } on DioException catch (e) {
+      return Future.error(
+        XenditException.fromJson(
+          e.response!.data,
+        ),
+      );
+    } catch (e) {
+      return Future.error(
+        XenditException(
+          message: e.toString(),
+        ),
+      );
+    }
+  }
+
+  /// Refund ewallet payment
+  ///
+  /// `id` is the payment id, starts with `ewc_`
+  ///
+  /// `request` is the request body, see
+  Future<XenditPaymentRefundResponse> refundEwalletPayment({
+    required String id,
+    required XenditPaymentRefundRequest request,
+  }) async {
+    try {
+      Response response = await _dio.post(
+        _endpoint.refundEwalletPayment(id),
+        data: jsonEncode(
+          request.toJson(),
+        ),
+      );
+      return XenditPaymentRefundResponse.fromJson(response.data);
     } on DioException catch (e) {
       return Future.error(
         XenditException.fromJson(
