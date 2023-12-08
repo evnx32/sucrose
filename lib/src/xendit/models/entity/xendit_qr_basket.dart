@@ -14,12 +14,26 @@ class XenditBasket {
   ///
   /// Available values: IDR
   final String currency;
+
+  /// Price per unit in basket currency
   final int price;
+
+  /// Number of units of this item in the basket
   final int quantity;
+
+  /// Type of product - `PRODUCT` or `SERVICE`
   final String type;
+
+  /// URL to the e-commerce page of the item
   final String url;
+
+  /// Description of product (255 characters)
   final String description;
   // final String subCategory;
+
+  /// Object of additional information the merchant may use. Merchant defines the JSON properties and values
+  ///
+  /// Merchant can specify up to 50 keys, with key names up to 40 characters long and values up to 500 characters long
   final XenditMetadata? metadata;
 
   XenditBasket({
