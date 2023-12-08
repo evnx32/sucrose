@@ -55,12 +55,14 @@ export 'request/invoice/xendit_invoice_request.dart';
 export 'request/linking/ewallet/xendit_ewallet_linking_request.dart';
 export 'request/linking/ewallet/xendit_update_ewallet_request.dart';
 export 'request/refund/xendit_refund_request.dart';
+export 'request/refund/xendit_refund_payment_request.dart';
 export 'request/sub_sequent/xendit_sub_sequent_payment_request.dart';
 export 'request/sub_sequent/xendit_initialize_and_pay_request.dart';
 export 'request/report/xendit_report_request.dart';
 export 'request/payment/qr_codes/xendit_qr_codes_request.dart';
 export 'request/payment/virtual_account/xendit_fva_payment_request.dart';
 export 'request/payment/virtual_account/xendit_patch_fva_payment_request.dart';
+export 'request/payment/ewallet/xendit_ewallet_payment_request.dart';
 
 // response
 export 'response/general/xendit_payment_request_by_id_response.dart';
@@ -70,8 +72,10 @@ export 'response/general/xendit_list_payment_request_response.dart';
 export 'response/general/xendit_payment_method_by_id_response.dart';
 export 'response/invoice/xendit_invoice_response.dart';
 export 'response/refund/xendit_refund_response.dart';
+export 'response/refund/xendit_payment_refund_response.dart';
 export 'response/customer/xendit_customer_response.dart';
 export 'response/report/xendit_report_response.dart';
 export 'response/request_payment/xendit_request_payment_response.dart';
 export 'response/payment/qr_codes/xendit_qr_codes_response.dart';
 export 'response/payment/virtual_account/xendit_fva_payment_response.dart';
+export 'response/payment/ewallet/xendit_ewallet_payment_response.dart';
