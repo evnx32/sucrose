@@ -15,6 +15,15 @@ class XenditChannelProperties {
   /// URL where the end-customer is redirected if the authorization is canceled.
   final String? cancelReturnUrl;
 
+  /// URL where the end-customer is redirected after the payment is completed.
+  final String? successRedirectUrl;
+
+  /// URL where the end-customer is redirected after the payment is failed.
+  final String? failureRedirectUrl;
+
+  /// URL where the end-customer is redirected after the payment is canceled.
+  final String? cancelRedirectUrl;
+
   /// Toggle used to require end-customer to input undergo OTP validation before completing a payment.
   ///
   /// Default value is true.
@@ -44,6 +53,9 @@ class XenditChannelProperties {
     this.successReturnUrl,
     this.failureReturnUrl,
     this.cancelReturnUrl,
+    this.successRedirectUrl,
+    this.failureRedirectUrl,
+    this.cancelRedirectUrl,
     this.requireAuth,
     this.skipThreeDSecure,
     this.merchantIdTag,
@@ -59,6 +71,9 @@ class XenditChannelProperties {
         successReturnUrl: json["success_return_url"],
         failureReturnUrl: json["failure_return_url"],
         cancelReturnUrl: json["cancel_return_url"],
+        successRedirectUrl: json["success_redirect_url"],
+        failureRedirectUrl: json["failure_redirect_url"],
+        cancelRedirectUrl: json["cancel_redirect_url"],
         requireAuth: json["require_auth"],
         skipThreeDSecure: json["skip_three_d_secure"],
         merchantIdTag: json["merchant_id_tag"],
@@ -70,6 +85,11 @@ class XenditChannelProperties {
         if (successReturnUrl != null) "success_return_url": successReturnUrl,
         if (failureReturnUrl != null) "failure_return_url": failureReturnUrl,
         if (cancelReturnUrl != null) "cancel_return_url": cancelReturnUrl,
+        if (successRedirectUrl != null)
+          "success_redirect_url": successRedirectUrl,
+        if (failureRedirectUrl != null)
+          "failure_redirect_url": failureRedirectUrl,
+        if (cancelRedirectUrl != null) "cancel_redirect_url": cancelRedirectUrl,
         if (requireAuth != null) "require_auth": requireAuth,
         if (skipThreeDSecure != null) "skip_three_d_secure": skipThreeDSecure,
         if (merchantIdTag != null) "merchant_id_tag": merchantIdTag,

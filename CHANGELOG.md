@@ -18,5 +18,6 @@
 * Adding some endpoints.
 * Add debug selection for showing log.
 * Adding some documentation on the code.
+* Adding `success_redirect_url`, `failure_redirect_url`, and `cancel_redirect_url` on the Channel Properties.
 * Adding some `enums`.
 * Fix minor bugs.
