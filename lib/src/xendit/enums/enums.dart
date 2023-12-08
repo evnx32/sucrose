@@ -93,6 +93,8 @@ enum XenditCardCurrency { IDR, PHP, THB, MYR, VND, USD }
 
 enum XenditEWalletCurrency { IDR, PHP, VND, THB }
 
+enum XenditInvoiceCurrency { IDR, PHP, THB, VND }
+
 enum XenditCurrency {
   PHP, // Philippines Peso
   IDR, // Indonesia Rupiah
@@ -225,3 +227,5 @@ enum XenditPaymentRequestItemType {
   FEE,
   DISCOUNT
 }
+
+enum XenditReportType { BALANCE_HISTORY, TRANSACTIONS, UPCOMING_TRANSACTIONS }
