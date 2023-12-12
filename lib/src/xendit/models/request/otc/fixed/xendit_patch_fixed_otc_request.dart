@@ -40,8 +40,10 @@ class XenditPatchFixedOtcRequest {
       );
 
   Map<String, dynamic> toJson() => {
-        "name": name,
-        "expected_amount": expectedAmount,
-        "expiration_date": expirationDate?.toIso8601String(),
+        if (name != null) "name": name,
+        if (expectedAmount != null) "expected_amount": expectedAmount,
+        if (expirationDate != null)
+          "expiration_date":
+              '${expirationDate!.toIso8601String().substring(0, 19)}Z',
       };
 }

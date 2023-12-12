@@ -77,7 +77,9 @@ class XenditFixedOtcRequest {
         "name": name,
         "expected_amount": expectedAmount,
         if (paymentCode != null) "payment_code": paymentCode,
-        if (expirationDate != null) "expiration_date": expirationDate,
+        if (expirationDate != null)
+          "expiration_date":
+              "${expirationDate!.toIso8601String().substring(0, 19)}Z",
         if (isSingleUse != null) "is_single_use": isSingleUse,
       };
 }
