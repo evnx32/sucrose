@@ -70,4 +70,13 @@ class XenditEndpoint {
   // Refund Ewallet Payment
   String refundEwalletPayment(String id) =>
       "$BASE_URL/ewallets/charges/$id/refunds";
+
+  // Fixed Payment Code
+  String createFixedPaymentCode() => "$BASE_URL/fixed_payment_code";
+
+  // Patch Fixed Payment Code
+  String patchFixedPaymentCode(String id) => "$BASE_URL/fixed_payment_code/$id";
+
+  // Get Fixed Payment Code by Id
+  String getFixedPaymentCode(String id) => "$BASE_URL/fixed_payment_code/$id";
 }
