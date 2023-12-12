@@ -63,8 +63,9 @@ export 'request/payment/qr_codes/xendit_qr_codes_request.dart';
 export 'request/payment/virtual_account/xendit_fva_payment_request.dart';
 export 'request/payment/virtual_account/xendit_patch_fva_payment_request.dart';
 export 'request/payment/ewallet/xendit_ewallet_payment_request.dart';
-export 'request/otc/xendit_fixed_otc_request.dart';
-export 'request/otc/xendit_patch_fixed_otc_request.dart';
+export 'request/otc/fixed/xendit_fixed_otc_request.dart';
+export 'request/otc/fixed/xendit_patch_fixed_otc_request.dart';
+export 'request/otc/xendit_otc_request.dart';
 
 // response
 export 'response/general/xendit_payment_request_by_id_response.dart';
@@ -81,4 +82,5 @@ export 'response/request_payment/xendit_request_payment_response.dart';
 export 'response/payment/qr_codes/xendit_qr_codes_response.dart';
 export 'response/payment/virtual_account/xendit_fva_payment_response.dart';
 export 'response/payment/ewallet/xendit_ewallet_payment_response.dart';
-export 'response/otc/xendit_fixed_otc_response.dart';
+export 'response/otc/fixed/xendit_fixed_otc_response.dart';
+export 'response/otc/xendit_otc_response.dart';
