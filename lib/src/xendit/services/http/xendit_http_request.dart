@@ -1382,9 +1382,9 @@ class XenditHttpRequest {
     }
   }
 
-  /// Create Fixed OTC Payment
+  /// Patch Fixed OTC Payment
   ///
-  /// One way for your customer to pay through Retail Outlets is by providing them Fixed Payment Code. Fixed payment code is a dedicated payment code under a name you choose, e.g. 'YourCompany - Becca Salim'. You will receive a webhook each time this fixed payment code is paid.
+  /// Payment Code is so adaptable, and it's all based on your needs. Therefore, we provide you this endpoint to easily update your payment code as you like.
   ///
   /// `id` is the payment id
   ///
@@ -1430,7 +1430,7 @@ class XenditHttpRequest {
 
   /// Get Fixed OTC Payment by id
   ///
-  /// `request` is the request body
+  /// `id` is the payment id
   ///
   /// `forUserId` is the sub-account user-id that you want to make this transaction for.
   ///
@@ -1451,6 +1451,147 @@ class XenditHttpRequest {
         ),
       );
       return XenditFixedOtcResponse.fromJson(response.data);
+    } on DioException catch (e) {
+      return Future.error(
+        XenditException.fromJson(
+          e.response!.data,
+        ),
+      );
+    } catch (e) {
+      return Future.error(
+        XenditException(
+          message: e.toString(),
+        ),
+      );
+    }
+  }
+
+  /// Create OTC Payment
+  ///
+  /// Retail Outlets (OTC) is a payment method allowing your end customer to make payments through one of our retail outlet partners throughout Philippines.
+  ///
+  /// End customers can visit any of our partners and inform the cashier of the merchant they are paying to, quote the unique payment code for the transaction, and make a payment in cash.
+  ///
+  /// `request` is the request body, see `XenditOtcRequest`
+  ///
+  /// `forUserId` is the sub-account user-id that you want to make this transaction for.
+  ///
+  /// The sub-account user-id that you want to make this transaction for.
+  ///
+  /// This header is only used if you have access to xenPlatform. See [xenPlatform](https://developers.xendit.co/api-reference/payments-api/#xenplatform) for more information
+  ///
+  /// `withSplitRule` Split Rule ID that you would like to apply to this Payment Request in order to split and route payments to multiple accounts.
+  ///
+  /// Please note: If you include this parameter, we will return the split_rule_id in the header of the API response.
+  ///
+  /// If for-user-id header is not present, Split Rule will still be routed from platform account to the specified destination account
+  ///
+  /// Please note that this is the newest header version, the older version with-fee-rule header will be deprecated by September 30, 2025. Please migrate to this version before the the deprecation date if you are still using with-fee-rule header.
+  ///
+  /// This header is only used if you have access to xenPlatform. See [xenPlatform](https://developers.xendit.co/api-reference/payments-api/#xenplatform) for more information.
+  Future<XenditOtcResponse> createOTCPayment({
+    required XenditOtcRequest request,
+    String forUserId = "",
+    String withSplitRule = "",
+  }) async {
+    try {
+      Response response = await _dio.post(
+        _endpoint.createOTCPayment(),
+        data: jsonEncode(
+          request.toJson(),
+        ),
+        options: Options(
+          headers: {
+            if (forUserId.isNotEmpty) "for-user-id": forUserId,
+            if (withSplitRule.isNotEmpty) "with-split-rule": withSplitRule,
+          },
+        ),
+      );
+      return XenditOtcResponse.fromJson(response.data);
+    } on DioException catch (e) {
+      return Future.error(
+        XenditException.fromJson(
+          e.response!.data,
+        ),
+      );
+    } catch (e) {
+      return Future.error(
+        XenditException(
+          message: e.toString(),
+        ),
+      );
+    }
+  }
+
+  /// Patch OTC Payment
+  ///
+  /// Payment Code is so adaptable, and it's all based on your needs. Therefore, we provide you this endpoint to easily update your payment code as you like.
+  ///
+  /// `id` is the payment id
+  ///
+  /// `request` is the request body, see `XenditOtcRequest`
+  ///
+  /// `forUserId` is the sub-account user-id that you want to make this transaction for.
+  ///
+  /// The sub-account user-id that you want to make this transaction for.
+  ///
+  /// This header is only used if you have access to xenPlatform. See [xenPlatform](https://developers.xendit.co/api-reference/payments-api/#xenplatform) for more information
+  Future<XenditOtcResponse> patchOTCPayment({
+    required String id,
+    required XenditOtcRequest request,
+    String forUserId = "",
+  }) async {
+    try {
+      Response response = await _dio.patch(
+        _endpoint.patchOTCPayment(id),
+        data: jsonEncode(
+          request.toJson(),
+        ),
+        options: Options(
+          headers: {
+            if (forUserId.isNotEmpty) "for-user-id": forUserId,
+          },
+        ),
+      );
+      return XenditOtcResponse.fromJson(response.data);
+    } on DioException catch (e) {
+      return Future.error(
+        XenditException.fromJson(
+          e.response!.data,
+        ),
+      );
+    } catch (e) {
+      return Future.error(
+        XenditException(
+          message: e.toString(),
+        ),
+      );
+    }
+  }
+
+  /// Get OTC Payment by id
+  ///
+  /// `request` is the request body, see `XenditOtcRequest`
+  ///
+  /// `forUserId` is the sub-account user-id that you want to make this transaction for.
+  ///
+  /// The sub-account user-id that you want to make this transaction for.
+  ///
+  /// This header is only used if you have access to xenPlatform. See [xenPlatform](https://developers.xendit.co/api-reference/payments-api/#xenplatform) for more information
+  Future<XenditOtcResponse> getOTCPaymentById({
+    required String id,
+    String forUserId = "",
+  }) async {
+    try {
+      Response response = await _dio.get(
+        _endpoint.getOTCPayment(id),
+        options: Options(
+          headers: {
+            if (forUserId.isNotEmpty) "for-user-id": forUserId,
+          },
+        ),
+      );
+      return XenditOtcResponse.fromJson(response.data);
     } on DioException catch (e) {
       return Future.error(
         XenditException.fromJson(
