@@ -1,6 +1,8 @@
 
 # Sucrose
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/fe61dea782d142b1b9c299941cd82e3c)](https://app.codacy.com/gh/evnx32/sucrose?utm_source=github.com&utm_medium=referral&utm_content=evnx32/sucrose&utm_campaign=Badge_Grade)
+
 A **Bridge Payment Gateway** for Xendit and any other payment gateway, but for now only **Xendit** available. Soon we'll add another payment gateway.
 
 
