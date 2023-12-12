@@ -3,8 +3,18 @@
 
 A **Bridge Payment Gateway** for Xendit and any other payment gateway, but for now only **Xendit** available. Soon we'll add another payment gateway.
 
+<p align="center">
+    <img alt="GitHub" src="https://img.shields.io/github/license/evnx32/sucrose?style=flat"></a>
+    <img src="https://img.shields.io/github/repo-size/evnx32/sucrose" alt="Repo Size" /></a>
+    <img alt="Pub Version" src="https://img.shields.io/pub/v/sucrose">
+    <img alt="GitHub top language" src="https://img.shields.io/github/languages/top/evnx32/sucrose">
+    <img alt="Codacy grade" src="https://img.shields.io/codacy/grade/0978a12dc2c24446898a128640b12c36">
+</p>
 
 
+## Available Payment Gateway
+- [x]   Xendit (WIP)
+- [ ]   Midtrans (Planned)
 
 ## Installation
 
@@ -24,11 +34,11 @@ final sucrose = Sucrose.initXendit(xenditApiKey:"YOUR_API_KEY");
 
 #### Create QR Payment Request
 
-```
+```dart
   final response = await sucrose.xendit.createQrPaymentRequest(
 
     // Here you can input some value.
-    XenditQrRequest(
+    request: XenditQrRequest(
       amount: 10000,
       currency: XenditQRCurrency.IDR,
       paymentMethod: XenditQRPaymentMethod(
@@ -49,10 +59,9 @@ final sucrose = Sucrose.initXendit(xenditApiKey:"YOUR_API_KEY");
 
 
 #### Create Invoice
-```
-
+```dart
   final response = await sucrose.xendit.createInvoice(
-    XenditInvoiceRequest(
+    request: XenditInvoiceRequest(
       externalId: "ref 13123213",
       amount: 10000,
       description: "your description goes here",
