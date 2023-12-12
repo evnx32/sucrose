@@ -1,8 +1,11 @@
 ## 0.0.1
 
+
 * TODO: Release BETA.
 
+
 ## 0.0.2
+
 
 * Adding more features.
 * Adding error handler.
@@ -10,7 +13,9 @@
 * Moving some import to `xendit_model.dart` for more better to read.
 * Refactoring some variables to private.
 
+
 ## 0.0.3
+
 
 * Adding more payment method.
 * Adding refund on the payment.
@@ -22,3 +27,10 @@
 * Adding `desktop_web_checkout_url`, `mobile_web_checkout_url`, `mobile_deeplink_checkout_url`, `qr_checkout_string` on the Actions
 * Adding some `enums`.
 * Fix minor bugs.
+
+
+## 0.0.3+1
+
+
+* Adding Fixed OTC Payment
+* Adding some documentations
