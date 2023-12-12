@@ -79,4 +79,13 @@ class XenditEndpoint {
 
   // Get Fixed Payment Code by Id
   String getFixedPaymentCode(String id) => "$BASE_URL/fixed_payment_code/$id";
+
+  // Create OTC Payment
+  String createOTCPayment() => "$BASE_URL/payment_codes";
+
+  // Get OTC Payment by Id
+  String getOTCPayment(String id) => "$BASE_URL/payment_codes/$id";
+
+  // Patch OTC Payment
+  String patchOTCPayment(String id) => "$BASE_URL/payment_codes/$id";
 }
