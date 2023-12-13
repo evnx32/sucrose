@@ -1,4 +1,4 @@
-class RetailOutletChannelProperties {
+class XenditRetailOutletChannelProperties {
   /// The payment code that you want to assign, e.g 12345. If none is provided, one will be generated at random.
   final String? paymentCode;
 
@@ -13,14 +13,15 @@ class RetailOutletChannelProperties {
   final DateTime? expiresAt;
 
   /// Object that contains the information to generate a valid payment code
-  RetailOutletChannelProperties({
+  XenditRetailOutletChannelProperties({
     this.paymentCode,
     this.customerName,
     this.expiresAt,
   });
 
-  factory RetailOutletChannelProperties.fromJson(Map<String, dynamic> json) =>
-      RetailOutletChannelProperties(
+  factory XenditRetailOutletChannelProperties.fromJson(
+          Map<String, dynamic> json) =>
+      XenditRetailOutletChannelProperties(
         paymentCode: json["payment_code"],
         customerName: json["customer_name"],
         expiresAt: json["expires_at"] == null
