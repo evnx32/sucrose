@@ -1,4 +1,4 @@
-class XenditFvaPaymentRequest {
+class XenditFvaPayment {
   /// An ID of your choice. Often it is unique identifier like a phone number, email or transaction ID.
   ///
   /// Characters: Special and alphanumeric
@@ -134,7 +134,7 @@ class XenditFvaPaymentRequest {
   final DateTime? expirationDate;
 
   /// Virtual Accounts are virtual bank accounts that can be created and assigned to your customers and act as medium to receive payments where your customers will pay via Bank Transfer.
-  XenditFvaPaymentRequest({
+  XenditFvaPayment({
     required this.externalId,
     required this.bankCode,
     required this.name,
@@ -151,8 +151,8 @@ class XenditFvaPaymentRequest {
     this.expirationDate,
   });
 
-  factory XenditFvaPaymentRequest.fromJson(Map<String, dynamic> json) =>
-      XenditFvaPaymentRequest(
+  factory XenditFvaPayment.fromJson(Map<String, dynamic> json) =>
+      XenditFvaPayment(
         externalId: json["external_id"],
         bankCode: json["bank_code"],
         name: json["name"],

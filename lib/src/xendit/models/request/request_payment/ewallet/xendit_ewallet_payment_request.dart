@@ -2,7 +2,7 @@ import 'package:sucrose/src/xendit/enums/enums.dart';
 import 'package:sucrose/src/xendit/models/entity/payment_method/xendit_ewallet_payment_method.dart';
 import 'package:sucrose/src/xendit/models/entity/xendit_metadata.dart';
 
-class XenditEwalletRequest {
+class XenditEwalletPaymentRequest {
   /// Expected and accepted amount of the transaction in the actual value in the provided currency.
   ///
   /// The amount to be paid. if you want OPEN amount, dont use this
@@ -34,7 +34,7 @@ class XenditEwalletRequest {
   final XenditMetadata metadata;
 
   /// Object that contains the required information to perform payments with ewallet
-  XenditEwalletRequest({
+  XenditEwalletPaymentRequest({
     this.amount,
     this.referenceId,
     required this.currency,

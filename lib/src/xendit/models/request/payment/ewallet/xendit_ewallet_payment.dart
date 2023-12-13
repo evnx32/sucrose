@@ -3,7 +3,7 @@ import 'package:sucrose/src/xendit/models/entity/channel_properties/xendit_chann
 import 'package:sucrose/src/xendit/models/entity/xendit_metadata.dart';
 import 'package:sucrose/src/xendit/models/entity/xendit_qr_basket.dart';
 
-class XenditEwalletPaymentRequest {
+class XenditEwalletPayment {
   /// Reference ID provided by merchant (255 characters)
   final String referenceId;
 
@@ -51,7 +51,7 @@ class XenditEwalletPaymentRequest {
   /// Object for creating a new Ewallet Payment Request
   ///
   /// `payment_method_id` and `customer_id` are required if `checkout_method` is `TOKENIZED_PAYMENT`
-  XenditEwalletPaymentRequest({
+  XenditEwalletPayment({
     required this.referenceId,
     required this.currency,
     required this.amount,
@@ -64,8 +64,8 @@ class XenditEwalletPaymentRequest {
     this.metadata,
   });
 
-  factory XenditEwalletPaymentRequest.fromJson(Map<String, dynamic> json) =>
-      XenditEwalletPaymentRequest(
+  factory XenditEwalletPayment.fromJson(Map<String, dynamic> json) =>
+      XenditEwalletPayment(
         referenceId: json["reference_id"],
         currency: json["currency"],
         amount: json["amount"],

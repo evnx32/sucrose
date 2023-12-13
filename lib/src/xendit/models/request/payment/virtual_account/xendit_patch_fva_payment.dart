@@ -1,4 +1,4 @@
-class XenditPatchFvaPaymentRequest {
+class XenditPatchFvaPayment {
   /// There are 2 types of Virtual Account:
   ///
   /// Single-use Virtual Account (`is_single_use`: `true`) can only be paid once. Used VA number can be recreated for other customer/invoice/transaction
@@ -82,7 +82,7 @@ class XenditPatchFvaPaymentRequest {
   final String? externalId;
 
   /// Object of additional information the merchant may use. Merchant defines the JSON properties and values
-  XenditPatchFvaPaymentRequest({
+  XenditPatchFvaPayment({
     this.isSingleUse,
     this.expectedAmount,
     this.minAmount,
@@ -93,8 +93,8 @@ class XenditPatchFvaPaymentRequest {
     this.externalId,
   });
 
-  factory XenditPatchFvaPaymentRequest.fromJson(Map<String, dynamic> json) =>
-      XenditPatchFvaPaymentRequest(
+  factory XenditPatchFvaPayment.fromJson(Map<String, dynamic> json) =>
+      XenditPatchFvaPayment(
         isSingleUse: json["is_single_use"],
         expectedAmount: json["expected_amount"],
         minAmount: json["min_amount"],

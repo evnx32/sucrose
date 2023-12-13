@@ -1,9 +1,9 @@
 import 'package:sucrose/src/xendit/enums/enums.dart';
+import 'package:sucrose/src/xendit/models/entity/payment_method/xendit_fixed_otc_payment_method.dart';
 import 'package:sucrose/src/xendit/models/entity/xendit_customer.dart';
 import 'package:sucrose/src/xendit/models/entity/xendit_metadata.dart';
-import 'package:sucrose/src/xendit/models/entity/payment_method/xendit_qr_payment_method.dart';
 
-class XenditQrRequest {
+class XenditFixedOTCPaymentRequest {
   /// Expected and accepted amount of the transaction in the actual value in the provided currency.
   ///
   /// Decimal places support varies per currency:
@@ -22,7 +22,7 @@ class XenditQrRequest {
   /// Respective Payment Method properties that corresponds to the chosen payment method type or channel.
   ///
   /// The request will apply the top-most values for customer_id, currency, and amount.
-  final XenditQRPaymentMethod paymentMethod;
+  final XenditFixedOTCPaymentMethod paymentMethod;
 
   /// Free-text field for any additional information regarding the payment method.
   ///
@@ -42,7 +42,7 @@ class XenditQrRequest {
   final String? country;
 
   /// Object that contains the required information to perform payments with QR
-  XenditQrRequest({
+  XenditFixedOTCPaymentRequest({
     required this.amount,
     required this.currency,
     required this.paymentMethod,
