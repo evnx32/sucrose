@@ -15,7 +15,7 @@ A **Bridge Payment Gateway** for Xendit and any other payment gateway, but for n
 
 ## Available Payment Gateway
 - [x]   Xendit (WIP)
-- [ ]   Midtrans (Planned)
+- [x]   Midtrans (WIP)
 
 ## Installation
 
@@ -26,12 +26,26 @@ flutter pub add sucrose
 ## Getting Started
 
 #### Init Xendit
-```
+```dart
 import 'package:sucrose/sucrose.dart';
     
 final sucrose = Sucrose.initXendit(xenditApiKey:"YOUR_API_KEY");
 ```
 
+#### Init Midtrans
+```dart
+import 'package:sucrose/sucrose.dart';
+    
+final sucrose = Sucrose.initMidtrans(
+    midtransApiKey: "YOUR_API_KEY",
+    environment: MidtransEnvironment.SANDBOX,
+    debug: true,
+);
+
+```
+
+
+## Get Started with Xendit
 
 #### Create QR Payment Request
 
