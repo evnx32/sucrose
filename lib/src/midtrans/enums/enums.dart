@@ -1,0 +1,1 @@
+enum MidtransEnvironment { SANDBOX, PRODUCTION }
