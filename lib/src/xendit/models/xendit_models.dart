@@ -47,10 +47,10 @@ export 'entity/channel_properties/xendit_retail_outlet_channel_properties.dart';
 
 // request
 export 'request/request_payment/xendit_payment_method_request.dart';
-export 'request/request_payment/virtual_account/xendit_virtual_account_request.dart';
-export 'request/request_payment/qr/xendit_qr_request.dart';
+export 'request/request_payment/virtual_account/xendit_virtual_account_payment_request.dart';
+export 'request/request_payment/qr/xendit_qr_payment_request.dart';
 export 'request/request_payment/xendit_request_payment.dart';
-export 'request/request_payment/ewallet/xendit_ewallet_request.dart';
+export 'request/request_payment/ewallet/xendit_ewallet_payment_request.dart';
 export 'request/invoice/xendit_invoice_request.dart';
 export 'request/linking/ewallet/xendit_ewallet_linking_request.dart';
 export 'request/linking/ewallet/xendit_update_ewallet_request.dart';
@@ -59,10 +59,10 @@ export 'request/refund/xendit_refund_payment_request.dart';
 export 'request/sub_sequent/xendit_sub_sequent_payment_request.dart';
 export 'request/sub_sequent/xendit_initialize_and_pay_request.dart';
 export 'request/report/xendit_report_request.dart';
-export 'request/payment/qr_codes/xendit_qr_codes_request.dart';
-export 'request/payment/virtual_account/xendit_fva_payment_request.dart';
-export 'request/payment/virtual_account/xendit_patch_fva_payment_request.dart';
-export 'request/payment/ewallet/xendit_ewallet_payment_request.dart';
+export 'request/payment/qr_codes/xendit_qr_codes_payment.dart';
+export 'request/payment/virtual_account/xendit_fva_payment.dart';
+export 'request/payment/virtual_account/xendit_patch_fva_payment.dart';
+export 'request/payment/ewallet/xendit_ewallet_payment.dart';
 export 'request/otc/fixed/xendit_fixed_otc_request.dart';
 export 'request/otc/fixed/xendit_patch_fixed_otc_request.dart';
 export 'request/otc/xendit_otc_request.dart';
