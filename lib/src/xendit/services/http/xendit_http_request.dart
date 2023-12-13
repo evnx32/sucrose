@@ -162,7 +162,7 @@ class XenditHttpRequest {
   ///
   /// `idempotencyKey` Provided to prevent duplicate requests. Can be equal to any UUID. Idempotency keys are stored on the request layer; it expires after 24 hours from the first request. Note: Max 100 characters
   Future<XenditRequestPaymentResponse> createQrPaymentRequest({
-    required XenditQrRequest request,
+    required XenditQrPaymentRequest request,
     String forUserId = "",
     String withSplitRule = "",
     String idempotencyKey = "",
@@ -272,7 +272,7 @@ class XenditHttpRequest {
   ///
   /// `idempotencyKey` Provided to prevent duplicate requests. Can be equal to any UUID. Idempotency keys are stored on the request layer; it expires after 24 hours from the first request. Note: Max 100 characters
   Future<XenditRequestPaymentResponse> createEwalletOTPPaymentRequest({
-    required XenditEwalletRequest request,
+    required XenditEwalletPaymentRequest request,
     String forUserId = "",
     String withSplitRule = "",
     String idempotencyKey = "",
@@ -949,7 +949,7 @@ class XenditHttpRequest {
   ///
   /// `webhookUrl` Callback URL where payment notifications will be sent. Default is the callback URL in your Dashboard for `QR code paid`
   Future<XenditQrCodesResponse> createQrCodesPayment({
-    required XenditQrCodesRequest request,
+    required XenditQrCodesPayment request,
     String forUserId = "",
     String idempotencyKey = "",
     String withSplitRule = "",
@@ -1092,7 +1092,7 @@ class XenditHttpRequest {
   ///
   /// This header is only used if you have access to xenPlatform. See [xenPlatform](https://developers.xendit.co/api-reference/payments-api/#xenplatform) for more information.
   Future<XenditFvaPaymentResponse> createFVAPayment({
-    required XenditFvaPaymentRequest request,
+    required XenditFvaPayment request,
     String forUserId = "",
     String withSplitRule = "",
   }) async {
@@ -1176,7 +1176,7 @@ class XenditHttpRequest {
   /// This header is only used if you have access to xenPlatform. See [xenPlatform](https://developers.xendit.co/api-reference/payments-api/#xenplatform) for more information
   Future<XenditFvaPaymentResponse> patchFVAPayment(
       {required String id,
-      required XenditPatchFvaPaymentRequest request,
+      required XenditPatchFvaPayment request,
       String forUserId = ""}) async {
     try {
       Response response = await _dio.patch(
