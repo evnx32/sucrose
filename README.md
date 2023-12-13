@@ -1,7 +1,7 @@
 
 # Sucrose
 
-A **Bridge Payment Gateway** for Xendit and any other payment gateway, but for now only **Xendit** available. Soon we'll add another payment gateway.
+A **Bridge Payment Gateway** for Xendit and any other payment gateway.
 
 <p align="center">
     <img alt="GitHub" src="https://img.shields.io/github/license/evnx32/sucrose?style=flat"></a>
