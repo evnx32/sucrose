@@ -1,3 +1,0 @@
-class Utils {
-  String xenditApiKey = "";
-}
