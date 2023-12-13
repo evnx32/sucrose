@@ -6,11 +6,9 @@ class XenditQRPaymentMethod {
   /// Describes whether or not the payment method can be reused for subsequent payments without going through the same linking process again.
   final XenditReusablePaymentMethod reusability;
 
-  /// For type='QR_CODE', this contains the necessary information to describe a QR Code payment method. This will be null otherwise.
+  /// For type=`QR_CODE`, this contains the necessary information to describe a QR Code payment method. This will be null otherwise.
   ///
   /// Please refer to QR Object for more parameter details.
-  ///
-  /// @required
   final XenditQrCodeProps qrCode;
 
   /// Object containing the payor's billing address. This will be null if not applicable.
