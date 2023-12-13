@@ -16,7 +16,7 @@ class XenditRetailOutlet {
   final XenditOTCCode channelCode;
 
   /// Information provided specific to the channel partner that was provided during the request
-  final RetailOutletChannelProperties? channelProperties;
+  final XenditRetailOutletChannelProperties? channelProperties;
 
   /// Object that contains the required information to perform payments with retail outlet
   XenditRetailOutlet({
@@ -37,7 +37,7 @@ class XenditRetailOutlet {
         ),
         channelProperties: json["channel_properties"] == null
             ? null
-            : RetailOutletChannelProperties.fromJson(
+            : XenditRetailOutletChannelProperties.fromJson(
                 json["channel_properties"]),
       );
 
