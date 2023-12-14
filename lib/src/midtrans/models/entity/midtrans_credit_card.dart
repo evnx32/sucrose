@@ -1,4 +1,5 @@
 class MidtransCreditCard {
+  /// Token id represents customer credit card information.
   final String? tokenId;
 
   MidtransCreditCard({

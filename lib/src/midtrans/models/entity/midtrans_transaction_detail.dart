@@ -1,5 +1,12 @@
 class MidtransTransactionDetail {
+  /// Order Id of the transaction.
+  ///
+  /// Note: Allowed Symbols are dash(-), underscore(_), tilde (~), and dot (.)
   final String orderId;
+
+  /// Total transaction amount in IDR.
+  ///
+  /// **Note:** Do not add decimal.
   final int grossAmount;
 
   MidtransTransactionDetail({

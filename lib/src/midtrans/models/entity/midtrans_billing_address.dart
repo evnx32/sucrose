@@ -1,13 +1,33 @@
 class MidtransBillingAddress {
+  ///	Customer's first name.
   final String? firstName;
+
+  /// Customer's last name.
   final String? lastName;
+
+  /// Customer's email address.
   final String? email;
+
+  /// Customer's phone number.
   final String? phone;
+
+  /// Customer's billing address.
   final String? address;
+
+  /// Customer's billing city.
   final String? city;
+
+  /// Postal code of the billing address.
+  ///
+  /// **Note:** Allowed characters are alphabets, numbers, dash (-), and space ( ).
   final String? postalCode;
+
+  /// Country ID of the billing address. Value: IDN. ISO 3166-1 alpha-3.
+  ///
+  /// Note: Currently only `IDN` is supported.
   final String? countryCode;
 
+  /// Object of customer's billing address.
   MidtransBillingAddress({
     this.firstName,
     this.lastName,

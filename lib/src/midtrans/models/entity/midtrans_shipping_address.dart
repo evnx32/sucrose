@@ -1,11 +1,30 @@
 class MidtransShippingAddress {
+  /// Customer's first name.
   final String? firstName;
+
+  /// Customer's last name.
   final String? lastName;
+
+  /// Customer's email address.
   final String? email;
+
+  /// Customer's phone number.
   final String? phone;
+
+  /// Customer's shipping address.
   final String? address;
+
+  /// Customer's shipping city.
   final String? city;
+
+  /// Postal code of the shipping address.
+  ///
+  /// **Note:** Allowed characters are alphabets, numbers, dash (-), and space ( ).
   final String? postalCode;
+
+  /// Country ID of the shipping address. Value: IDN. ISO 3166-1 alpha-3.
+  ///
+  /// **Note:** Currently only `IDN` is supported.
   final String? countryCode;
 
   MidtransShippingAddress({

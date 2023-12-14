@@ -1,11 +1,44 @@
 class MidtransItemDetail {
+  /// The ID of the item.
   final String? id;
+
+  /// Price of the item in IDR.
+  ///
+  /// **Note:** Do not add decimal.
   final int? price;
+
+  /// The quantity of the item.
   final int? quantity;
+
+  /// The name of the item.
   final String? name;
+
+  /// The brand of the item.
   final String? brand;
+
+  /// The category of the item.
   final String? category;
+
+  /// The merchant name of the item.
   final String? merchantName;
+
+  /// Installment term, use two digits numeric. For example, 03, 06, 09, 12, 24.
+  ///
+  /// **Note:** This is a *BCA KlikPay* exclusive field.
+  final String? tenor;
+
+  /// Installment code, use **000** for default.
+  ///
+  /// **Note:** This is a *BCA KlikPay* exclusive field.
+  final String? codePlan;
+
+  /// Installment Merchant ID.
+  ///
+  /// **Note:** This is a *BCA KlikPay* exclusive field.
+  final String? mid;
+
+  /// HTTP URL of the item in the merchant site
+  final String? url;
 
   MidtransItemDetail({
     this.id,
@@ -15,6 +48,10 @@ class MidtransItemDetail {
     this.brand,
     this.category,
     this.merchantName,
+    this.tenor,
+    this.codePlan,
+    this.mid,
+    this.url,
   });
 
   factory MidtransItemDetail.fromJson(Map<String, dynamic> json) =>
@@ -26,6 +63,10 @@ class MidtransItemDetail {
         brand: json["brand"],
         category: json["category"],
         merchantName: json["merchant_name"],
+        tenor: json["tenor"],
+        codePlan: json["code_plan"],
+        mid: json["mid"],
+        url: json["url"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -36,26 +77,5 @@ class MidtransItemDetail {
         "brand": brand,
         "category": category,
         "merchant_name": merchantName,
-      };
-}
-
-class TransactionDetails {
-  final String? orderId;
-  final int? grossAmount;
-
-  TransactionDetails({
-    this.orderId,
-    this.grossAmount,
-  });
-
-  factory TransactionDetails.fromJson(Map<String, dynamic> json) =>
-      TransactionDetails(
-        orderId: json["order_id"],
-        grossAmount: json["gross_amount"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "order_id": orderId,
-        "gross_amount": grossAmount,
       };
 }

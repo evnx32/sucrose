@@ -2,11 +2,22 @@ import 'package:sucrose/src/midtrans/models/entity/midtrans_billing_address.dart
 import 'package:sucrose/src/midtrans/models/entity/midtrans_shipping_address.dart';
 
 class MidtransCustomerDetails {
+  /// Customer's first name.
   final String? firstName;
+
+  /// Customer's last name.
   final String? lastName;
+
+  /// Customer's email address.
   final String? email;
+
+  /// Customer's phone number.
   final String? phone;
+
+  /// Object of customer's billing address.
   final MidtransBillingAddress? billingAddress;
+
+  /// Object of customer's shipping address.
   final MidtransShippingAddress? shippingAddress;
 
   MidtransCustomerDetails({

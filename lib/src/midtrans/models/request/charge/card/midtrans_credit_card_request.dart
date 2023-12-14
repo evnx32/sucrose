@@ -4,13 +4,6 @@ import 'package:sucrose/src/midtrans/models/entity/midtrans_item_detail.dart';
 import 'package:sucrose/src/midtrans/models/entity/midtrans_transaction_detail.dart';
 
 class MidtransCreditCardRequest {
-  /// The payment method used by the customer.
-  ///
-  /// Value: `credit_card`.
-  ///
-  /// Note: For any transactions using payment card (credit or debit), payment_type is credit_card.
-  final String paymentType;
-
   /// The details of the specific transaction such as `order_id` and `gross_amount`.
   final MidtransTransactionDetail transactionDetails;
 
@@ -24,7 +17,6 @@ class MidtransCreditCardRequest {
   final MidtransCustomerDetails? customerDetails;
 
   MidtransCreditCardRequest({
-    required this.paymentType,
     required this.transactionDetails,
     required this.creditCard,
     this.itemDetails,
@@ -33,7 +25,6 @@ class MidtransCreditCardRequest {
 
   factory MidtransCreditCardRequest.fromJson(Map<String, dynamic> json) =>
       MidtransCreditCardRequest(
-        paymentType: json["payment_type"],
         transactionDetails:
             MidtransTransactionDetail.fromJson(json["transaction_details"]),
         creditCard: MidtransCreditCard.fromJson(json["credit_card"]),
@@ -47,7 +38,7 @@ class MidtransCreditCardRequest {
       );
 
   Map<String, dynamic> toJson() => {
-        "payment_type": paymentType,
+        "payment_type": "credit_card",
         "transaction_details": transactionDetails.toJson(),
         "credit_card": creditCard.toJson(),
         "item_details": itemDetails == null
