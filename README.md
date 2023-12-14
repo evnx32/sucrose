@@ -47,31 +47,6 @@ final sucrose = Sucrose.initMidtrans(
 
 ## Get Started with Xendit
 
-#### Create QR Payment Request
-
-```dart
-  final response = await sucrose.xendit.createQrPaymentRequest(
-
-    // Here you can input some value.
-    request: XenditQrRequest(
-      amount: 10000,
-      currency: XenditQRCurrency.IDR,
-      paymentMethod: XenditQRPaymentMethod(
-        reusability: XenditReusablePaymentMethod.ONE_TIME_USE,
-        qrCode: XenditQrCodeProps(
-          channelCode: XenditQRChannelCode.DANA,
-        ),
-      ),
-      description: "",
-      metadata: XenditMetadata(
-        metadata: {
-          "test": "test",
-        },
-      ),
-    ),
-  );
-```
-
 
 #### Create Invoice
 ```dart
@@ -93,6 +68,54 @@ final sucrose = Sucrose.initMidtrans(
     ),
   );
 ```
+
+## Get Started with Midtrans
+
+#### Create Snap Transaction
+```dart
+    final response = await sucrose.midtrans.createSnapTransaction(
+      request: MidtransSnapTransactionRequest(
+        transactionDetails: MidtransTransactionDetail(
+          orderId: "Inv-${DateTime.now().millisecondsSinceEpoch}",
+          grossAmount: 12500,
+        ),
+        itemDetails: [
+          MidtransItemDetail(
+            id: "021930129031",
+            name: "Steam Wallet IDR 12K",
+            price: 12500,
+            quantity: 1,
+          ),
+        ],
+        customerDetails: MidtransCustomerDetails(
+          email: "test@mail.com",
+          firstName: "Test",
+          lastName: "Test",
+          phone: "08123456789",
+          shippingAddress: MidtransShippingAddress(
+            address: "Jalan Teknologi Indonesia",
+            city: "Jakarta",
+            countryCode: "IDN",
+            firstName: "Test",
+            lastName: "Test",
+            phone: "08123456789",
+            postalCode: "12345",
+          ),
+          billingAddress: MidtransBillingAddress(
+            address: "Jalan Teknologi Indonesia",
+            city: "Jakarta",
+            countryCode: "IDN",
+            firstName: "Test",
+            lastName: "Test",
+            phone: "08123456789",
+            postalCode: "12345",
+          ),
+        ),
+      ),
+    );
+```
+
+
 ## Feedback
 
 If you have any feedback, please reach out to us at evnx32@gmail.com
