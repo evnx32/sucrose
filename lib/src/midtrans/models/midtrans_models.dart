@@ -7,6 +7,11 @@ export 'entity/midtrans_shipping_address.dart';
 export 'entity/midtrans_transaction_detail.dart';
 export 'entity/midtrans_inquiry.dart';
 export 'entity/midtrans_payment.dart';
+export 'entity/midtrans_gopay_partner.dart';
+export 'entity/midtrans_get_gopay_account_metadata.dart';
+export 'entity/midtrans_gopay_balance.dart';
+export 'entity/midtrans_gopay_payment_option.dart';
+export 'entity/midtrans_subscription_account_detail.dart';
 
 // Props
 export 'entity/va_props/midtrans_permata_va_props.dart';
@@ -18,6 +23,10 @@ export 'entity/ewallet_props/midtrans_gopay_props.dart';
 export 'entity/ewallet_props/midtrans_qris_props.dart';
 export 'entity/ewallet_props/midtrans_shopeepay_props.dart';
 export 'entity/otc_props/midtrans_otc_props.dart';
+export 'entity/subscription_props/midtrans_subscription_gopay_props.dart';
+export 'entity/subscription_props/midtrans_subscription_schedule_props.dart';
+export 'entity/subscription_props/midtrans_subscription_retry_schedule.dart';
+export 'entity/subscription_props/midtrans_patch_subscription_schedule.dart';
 
 // Request
 export 'request/charge/card/midtrans_credit_card_request.dart';
@@ -32,6 +41,9 @@ export 'request/charge/ewallet/shopeepay/midtrans_shopeepay_request.dart';
 export 'request/charge/otc/midtrans_otc_request.dart';
 export 'request/refund/midtrans_refund_request.dart';
 export 'request/snap/midtrans_snap_transaction_request.dart';
+export 'request/tokenizations/gopay/midtrans_gopay_account_request.dart';
+export 'request/subscription/gopay/midtrans_subscription_request.dart';
+export 'request/subscription/gopay/midtrans_patch_subscription_request.dart';
 
 /// Response
 export 'response/charge/card/midtrans_card_token_response.dart';
@@ -50,3 +62,9 @@ export 'response/expired/midtrans_expired_response.dart';
 export 'response/refund/midtrans_refund_response.dart';
 export 'response/status_transaction/midtrans_status_transaction_response.dart';
 export 'response/snap/midtrans_snap_transaction_response.dart';
+export 'response/tokenizations/gopay/midtrans_gopay_account_response.dart';
+export 'response/tokenizations/gopay/midtrans_get_gopay_account_response.dart';
+export 'response/tokenizations/gopay/unbind/midtrans_unbind_gopay_account_response.dart';
+export 'response/subscription/gopay/midtrans_subscription_gopay_response.dart';
+export 'response/subscription/gopay/midtrans_get_subscription_gopay_response.dart';
+export 'response/subscription/midtrans_status_message_response.dart';
