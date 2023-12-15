@@ -7,7 +7,7 @@ class MidtransQrisRequest {
   /// The details of the specific transaction such as `order_id` and `gross_amount`.
   final MidtransTransactionDetail transactionDetails;
 
-  /// The details of the payment card used for the transaction.
+  /// The details of qris payment used for the transaction.
   final MidtransQrisProps qris;
 
   /// Details of the item(s) purchased by the customer.
