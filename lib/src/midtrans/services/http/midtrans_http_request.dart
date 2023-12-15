@@ -28,12 +28,18 @@ class MidtransHttpRequest {
     required MidtransEnvironment environment,
     bool debug = false,
   }) {
+    _dio.options = BaseOptions(
+      baseUrl: environment == MidtransEnvironment.PRODUCTION
+          ? "https://app.midtrans.com"
+          : "https://api.sandbox.midtrans.com",
+      headers: {
+        "Authorization": apiKey,
+        "Accept": "*/*",
+        "Content-Type": "application/json"
+      },
+    );
+
     _environment = environment;
-    if (environment == MidtransEnvironment.PRODUCTION) {
-      _dio.options.baseUrl = "https://app.midtrans.com";
-    } else {
-      _dio.options.baseUrl = "https://api.sandbox.midtrans.com";
-    }
 
     if (debug) {
       _dio.interceptors.add(
@@ -43,6 +49,7 @@ class MidtransHttpRequest {
           requestBody: true,
           requestHeader: true,
           responseHeader: true,
+          error: true,
         ),
       );
 
@@ -55,10 +62,6 @@ class MidtransHttpRequest {
         ),
       );
     }
-
-    // add headers
-    _dio.options.headers["Authorization"] = apiKey;
-    _dio.options.headers["Content-Type"] = "application/json";
   }
 
   final Logger _logger = Logger(
@@ -542,6 +545,243 @@ class MidtransHttpRequest {
         ),
       );
       return MidtransSnapTransactionResponse.fromJson(response.data);
+    } on DioException catch (e) {
+      return Future.error(
+        MidtransException.fromJson(
+          e.response!.data,
+        ),
+      );
+    } catch (e) {
+      return Future.error(
+        MidtransException(
+          statusMessage: e.toString(),
+        ),
+      );
+    }
+  }
+
+  /// Gopay Account Tokenization
+  ///
+  /// `request` is for the details of the customer’s GoPay account. See `MidtransGoPayAccountRequest` for more details.
+  Future<MidtransGoPayAccountResponse> createGopayAccountLinked({
+    required MidtransGopayAccountRequest request,
+  }) async {
+    try {
+      Response response = await _dio.post(
+        _endpoint.payAccount(),
+        data: jsonEncode(request.toJson()),
+        options: Options(
+          headers: {},
+        ),
+      );
+      return MidtransGoPayAccountResponse.fromJson(response.data);
+    } on DioException catch (e) {
+      return Future.error(
+        MidtransException.fromJson(
+          e.response!.data,
+        ),
+      );
+    } catch (e) {
+      return Future.error(
+        MidtransException(
+          statusMessage: e.toString(),
+        ),
+      );
+    }
+  }
+
+  /// Get Gopay Subscription
+  ///
+  /// Get Pay Account is triggered to get GoPay's account linked status. This method is only applicable for GoPay Tokenizations.
+  ///
+  /// `id` is your GoPay's account linked status. `account_id`,
+  Future<MidtransGetGoPayAccountResponse> getGopayAccountLinked({
+    required String id,
+  }) async {
+    try {
+      Response response = await _dio.get(
+        _endpoint.getPayAccount(id),
+        options: Options(
+          headers: {},
+        ),
+      );
+      return MidtransGetGoPayAccountResponse.fromJson(response.data);
+    } on DioException catch (e) {
+      return Future.error(
+        MidtransException.fromJson(
+          e.response!.data,
+        ),
+      );
+    } catch (e) {
+      return Future.error(
+        MidtransException(
+          statusMessage: e.toString(),
+        ),
+      );
+    }
+  }
+
+  /// Unbind GoPay Account
+  ///
+  /// `accountID` is your GoPay's account linked status. `account_id`,
+  Future<MidtransUnbindGoPayAccountResponse> unbindGopayAccountLinked({
+    required String accountID,
+  }) async {
+    try {
+      Response response = await _dio.post(
+        _endpoint.unbindPayAccount(accountID),
+        options: Options(
+          headers: {},
+        ),
+      );
+      return MidtransUnbindGoPayAccountResponse.fromJson(response.data);
+    } on DioException catch (e) {
+      return Future.error(
+        MidtransException.fromJson(
+          e.response!.data,
+        ),
+      );
+    } catch (e) {
+      return Future.error(
+        MidtransException(
+          statusMessage: e.toString(),
+        ),
+      );
+    }
+  }
+
+  /// Gopay Account Tokenization
+  ///
+  /// `request` is for the details of the customer’s GoPay account. See `MidtransGoPayAccountRequest` for more details.
+  Future<MidtransSubscriptionGopayResponse> createGopaySubscription({
+    required MidtransSubscriptionGopayRequest request,
+  }) async {
+    try {
+      Response response = await _dio.post(
+        _endpoint.subscription(),
+        data: jsonEncode(request.toJson()),
+        options: Options(
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": _dio.options.headers["Authorization"],
+          },
+        ),
+      );
+      return MidtransSubscriptionGopayResponse.fromJson(response.data);
+    } on DioException catch (e) {
+      return Future.error(
+        MidtransException.fromJson(
+          e.response!.data,
+        ),
+      );
+    } catch (e) {
+      return Future.error(
+        MidtransException(
+          statusMessage: e.toString(),
+        ),
+      );
+    }
+  }
+
+  /// Get Gopay Subscription
+  ///
+  /// Get Pay Account is triggered to get GoPay's account linked status. This method is only applicable for GoPay Tokenizations.
+  ///
+  /// `id` is your GoPay's account linked status. `account_id`,
+  Future<MidtransGetSubscriptionGopayResponse> getSubscriptionGopay({
+    required String id,
+  }) async {
+    try {
+      Response response = await _dio.get(
+        _endpoint.getSubscription(id),
+      );
+      return MidtransGetSubscriptionGopayResponse.fromJson(response.data);
+    } on DioException catch (e) {
+      return Future.error(
+        MidtransException.fromJson(
+          e.response!.data,
+        ),
+      );
+    } catch (e) {
+      return Future.error(
+        MidtransException(
+          statusMessage: e.toString(),
+        ),
+      );
+    }
+  }
+
+  /// Disable Gopay Subscription
+  ///
+  /// Disable a customer's subscription account with a specific `subscription_id` so that the customer is not charged for the subscription in the future. Successful request returns `status_message` indicating that the subscription details are updated.
+  ///
+  /// `id` is your GoPay Subscription ID
+  Future<MidtransStatusMessageResponse> disableSubscriptionGopay({
+    required String id,
+  }) async {
+    try {
+      Response response = await _dio.post(
+        _endpoint.disableSubscription(id),
+      );
+      return MidtransStatusMessageResponse.fromJson(response.data);
+    } on DioException catch (e) {
+      return Future.error(
+        MidtransException.fromJson(
+          e.response!.data,
+        ),
+      );
+    } catch (e) {
+      return Future.error(
+        MidtransException(
+          statusMessage: e.toString(),
+        ),
+      );
+    }
+  }
+
+  /// Enable Gopay Subscription
+  ///
+  /// Activate a customer's subscription account with a specific `subscription_id` so that the customer is charged for the subscription in the future. Successful request returns `status_message` indicating that the subscription details are updated.
+  ///
+  /// `id` is your GoPay Subscription ID
+  Future<MidtransStatusMessageResponse> enableSubscriptionGopay({
+    required String id,
+  }) async {
+    try {
+      Response response = await _dio.post(
+        _endpoint.enableSubscription(id),
+      );
+      return MidtransStatusMessageResponse.fromJson(response.data);
+    } on DioException catch (e) {
+      return Future.error(
+        MidtransException.fromJson(
+          e.response!.data,
+        ),
+      );
+    } catch (e) {
+      return Future.error(
+        MidtransException(
+          statusMessage: e.toString(),
+        ),
+      );
+    }
+  }
+
+  /// Enable Gopay Subscription
+  ///
+  /// Activate a customer's subscription account with a specific `subscription_id` so that the customer is charged for the subscription in the future. Successful request returns `status_message` indicating that the subscription details are updated.
+  ///
+  /// `id` is your GoPay Subscription ID
+  Future<MidtransStatusMessageResponse> patchSubscriptionGopay({
+    required String id,
+    required MidtransPatchSubscriptionGopayRequest request,
+  }) async {
+    try {
+      Response response = await _dio.patch(
+        _endpoint.updateSubscription(id),
+        data: jsonEncode(request.toJson()),
+      );
+      return MidtransStatusMessageResponse.fromJson(response.data);
     } on DioException catch (e) {
       return Future.error(
         MidtransException.fromJson(
