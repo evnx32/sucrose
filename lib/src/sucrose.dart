@@ -24,7 +24,7 @@ class Sucrose {
     bool debug = false,
   }) {
     midtrans = MidtransHttpRequest.init(
-      apiKey: "Basic ${base64.encode(utf8.encode("$midtransApiKey:"))}}",
+      apiKey: "Basic ${base64.encode(utf8.encode("$midtransApiKey:"))}",
       environment: environment,
       debug: debug,
     );
