@@ -1,6 +1,6 @@
 name: sucrose
-description: A Bridge Payment Gateway for Xendit and any other payment gateway.
-version: 0.0.3
+description: A Bridge Payment Gateway for Xendit, Midtrans and any other payment gateway.
+version: 0.0.4
 homepage: https://github.com/evnx32/sucrose
 repository: https://github.com/evnx32/sucrose
 

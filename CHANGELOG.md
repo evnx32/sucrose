@@ -32,5 +32,13 @@
 ## 0.0.3+1
 
 
-* Adding Fixed OTC Payment
+* Adding Fixed OTC Payment for Indonesia
+* Adding OTC Payment for Philippines
 * Adding some documentations
+
+
+## 0.0.4
+
+
+* Adding Midtrans Payment Gateway.
+* Fix minor bug.
