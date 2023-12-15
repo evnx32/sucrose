@@ -24,4 +24,28 @@ class MidtransEndpoint {
 
   // Snap Transaction
   String snapTransaction() => "/snap/v1/transactions";
+
+  // Pay Account
+  String payAccount() => "/v2/pay/account";
+
+  // Get Pay Account
+  String getPayAccount(String id) => "/v2/pay/account/$id";
+
+  // Unbind Pay Account
+  String unbindPayAccount(String id) => "/v2/pay/account/$id/unbind";
+
+  // Subscription
+  String subscription() => "/v1/subscriptions";
+
+  // Get Subscription
+  String getSubscription(String id) => "/v1/subscriptions/$id";
+
+  // Enable Subscription
+  String enableSubscription(String id) => "/v1/subscriptions/$id/enable";
+
+  // Disable Subscription
+  String disableSubscription(String id) => "/v1/subscriptions/$id/disable";
+
+  // Update Subscription
+  String updateSubscription(String id) => "/v1/subscriptions/$id";
 }
