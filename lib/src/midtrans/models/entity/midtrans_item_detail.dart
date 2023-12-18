@@ -5,13 +5,13 @@ class MidtransItemDetail {
   /// Price of the item in IDR.
   ///
   /// **Note:** Do not add decimal.
-  final int? price;
+  final int price;
 
   /// The quantity of the item.
-  final int? quantity;
+  final int quantity;
 
   /// The name of the item.
-  final String? name;
+  final String name;
 
   /// The brand of the item.
   final String? brand;
@@ -42,9 +42,9 @@ class MidtransItemDetail {
 
   MidtransItemDetail({
     this.id,
-    this.price,
-    this.quantity,
-    this.name,
+    required this.price,
+    required this.quantity,
+    required this.name,
     this.brand,
     this.category,
     this.merchantName,
