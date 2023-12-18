@@ -10,6 +10,15 @@ class MidtransEndpoint {
   ) =>
       "/v2/token?client_key=$clientKey&card_number=$cardNumber&card_exp_month=$cardExpMonth&card_exp_year=$cardExpYear&card_cvv=$cardCvv";
 
+  String registerCard(
+    String clientKey,
+    String cardNumber,
+    String cardExpMonth,
+    String cardExpYear,
+    String cardCvv,
+  ) =>
+      "/v2/card/register?client_key=$clientKey&card_number=$cardNumber&card_exp_month=$cardExpMonth&card_exp_year=$cardExpYear&card_cvv=$cardCvv";
+
   // Cancel Transaction
   String cancelTransaction(String id) => "/v2/$id/cancel";
 

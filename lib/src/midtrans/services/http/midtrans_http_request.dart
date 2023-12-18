@@ -125,6 +125,55 @@ class MidtransHttpRequest {
     }
   }
 
+  /// Register Card
+  ///
+  /// Register Card can be triggered to register the card information of the customer for future one click and two click transactions.
+  ///
+  /// `clientKey` is your Midtrans Client Key
+  ///
+  /// `cardNumber` The 16 digits Credit Card number.
+  ///
+  /// `cardExpMonth` The card expiry month in MM format.
+  ///
+  /// `cardExpYear` The card expiry year in YYYY format.
+  ///
+  /// `cardCvv` The CVV number printed on the card.
+  Future<MidtransRegisterCardResponse> registerCard({
+    required String clientKey,
+    required String cardNumber,
+    required String cardExpMonth,
+    required String cardExpYear,
+    required String cardCvv,
+  }) async {
+    try {
+      Response response = await _dio.get(
+        _endpoint.registerCard(
+          clientKey,
+          cardNumber,
+          cardExpMonth,
+          cardExpYear,
+          cardCvv,
+        ),
+        options: Options(
+          headers: {},
+        ),
+      );
+      return MidtransRegisterCardResponse.fromJson(response.data);
+    } on DioException catch (e) {
+      return Future.error(
+        MidtransException.fromJson(
+          e.response!.data,
+        ),
+      );
+    } catch (e) {
+      return Future.error(
+        MidtransException(
+          statusMessage: e.toString(),
+        ),
+      );
+    }
+  }
+
   /// Create Credit Card Charge
   Future<MidtransCreditCardResponse> chargeCreditCard({
     required MidtransCreditCardRequest request,
@@ -782,6 +831,64 @@ class MidtransHttpRequest {
         data: jsonEncode(request.toJson()),
       );
       return MidtransStatusMessageResponse.fromJson(response.data);
+    } on DioException catch (e) {
+      return Future.error(
+        MidtransException.fromJson(
+          e.response!.data,
+        ),
+      );
+    } catch (e) {
+      return Future.error(
+        MidtransException(
+          statusMessage: e.toString(),
+        ),
+      );
+    }
+  }
+
+  /// AkuLaku Charge
+  ///
+  /// In addition to their shopping mall business, Akulaku has been enabling E-commerce to sell their merchandise in installment. It allows their customers to pay in installment without a payment card as long as they are registered to Akulaku.
+  ///
+  /// `request` is for the details of the customer’s Akulaku account. See `MidtransAkulakuRequest` for more details.
+  Future<MidtransAkulakuResponse> chargeAkulaku({
+    required MidtransAkulakuRequest request,
+  }) async {
+    try {
+      Response response = await _dio.post(
+        _endpoint.charge(),
+        data: jsonEncode(request.toJson()),
+      );
+      return MidtransAkulakuResponse.fromJson(response.data);
+    } on DioException catch (e) {
+      return Future.error(
+        MidtransException.fromJson(
+          e.response!.data,
+        ),
+      );
+    } catch (e) {
+      return Future.error(
+        MidtransException(
+          statusMessage: e.toString(),
+        ),
+      );
+    }
+  }
+
+  /// Charge Kredivo
+  ///
+  /// Kredivo has been enabling E-commerce to sell their merchandise in installment. It allows their customers to pay in installment without a payment card as long as they are registered to Kredivo.
+  ///
+  /// `request` is for the details of the customer’s Kredivo account. See `MidtransKredivoRequest` for more details.
+  Future<MidtransKredivoResponse> chargeKredivo({
+    required MidtransKredivoRequest request,
+  }) async {
+    try {
+      Response response = await _dio.post(
+        _endpoint.charge(),
+        data: jsonEncode(request.toJson()),
+      );
+      return MidtransKredivoResponse.fromJson(response.data);
     } on DioException catch (e) {
       return Future.error(
         MidtransException.fromJson(
