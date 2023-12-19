@@ -314,7 +314,7 @@ class MidtransHttpRequest {
     }
   }
 
-  /// Create BCA Virtual Account Charge
+  /// Create CIMB Virtual Account Charge
   Future<MidtransCimbVAResponse> chargeCimbVA({
     required MidtransCimbVARequest request,
   }) async {
@@ -370,7 +370,7 @@ class MidtransHttpRequest {
     }
   }
 
-  /// Create Gopay Virtual Account Charge
+  /// Create QRIS Virtual Account Charge
   Future<MidtransQrisResponse> chargeQRIS({
     required MidtransQrisRequest request,
   }) async {
@@ -398,7 +398,7 @@ class MidtransHttpRequest {
     }
   }
 
-  /// Create Gopay Virtual Account Charge
+  /// Create ShopeePay Virtual Account Charge
   Future<MidtransShopeePayResponse> chargeShopeePay({
     required MidtransShopeePayRequest request,
   }) async {
@@ -426,7 +426,7 @@ class MidtransHttpRequest {
     }
   }
 
-  /// Create Gopay Virtual Account Charge
+  /// Create Over The Counter Virtual Account Charge
   Future<MidtransOtcResponse> chargeOverTheCounter({
     required MidtransOTCRequest request,
   }) async {
@@ -574,9 +574,10 @@ class MidtransHttpRequest {
     }
   }
 
-  /// Get Status Transaction
+  /// Create Snap Transaction
   ///
-  /// `id` is your Midtrans `transaction_id`, or you can use `order_id` instead.
+  /// Show Snap UI in your app by embedding Snap JS within a page or loading it as an overlay in your app.
+
   Future<MidtransSnapTransactionResponse> createSnapTransaction({
     required MidtransSnapTransactionRequest request,
   }) async {
@@ -610,6 +611,8 @@ class MidtransHttpRequest {
   }
 
   /// Gopay Account Tokenization
+  ///
+  /// Create Pay Account is triggered to link the customer's account to be used for payments using specific payment channel.
   ///
   /// `request` is for the details of the customer’s GoPay account. See `MidtransGoPayAccountRequest` for more details.
   Future<MidtransGoPayAccountResponse> createGopayAccountLinked({
@@ -672,6 +675,8 @@ class MidtransHttpRequest {
 
   /// Unbind GoPay Account
   ///
+  /// Remove linked GoPay account in GoPay Tokenizations.
+  ///
   /// `accountID` is your GoPay's account linked status. `account_id`,
   Future<MidtransUnbindGoPayAccountResponse> unbindGopayAccountLinked({
     required String accountID,
@@ -699,9 +704,13 @@ class MidtransHttpRequest {
     }
   }
 
-  /// Gopay Account Tokenization
+  /// Create Gopay Subscription
+  ///
+  /// Create a subscription or recurring transaction by sending all the details required to create a transaction. The details such as `name`, `amount`, `currency`, `payment_type`, `token`, and `schedule` are sent in the request. Successful request returns` id` `status:active`, and other subscription details.
   ///
   /// `request` is for the details of the customer’s GoPay account. See `MidtransGoPayAccountRequest` for more details.
+  ///
+  /// [See here for more details](https://docs.midtrans.com/reference/create-subscription)
   Future<MidtransSubscriptionGopayResponse> createGopaySubscription({
     required MidtransSubscriptionGopayRequest request,
   }) async {

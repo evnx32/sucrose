@@ -5,11 +5,17 @@ import 'package:sucrose/src/xendit/services/http/xendit_http_request.dart';
 import 'dart:convert';
 
 class Sucrose {
-  // xendit services
+  /// xendit services
   late XenditHttpRequest xendit;
+
+  /// midtrans services
   late MidtransHttpRequest midtrans;
 
   /// Initialize Xendit with Xendit API key
+  ///
+  /// `xenditApiKey` is your Xendit API key
+  ///
+  /// `debug` is whether you want to print debug log or not
   Sucrose.initXendit({required String xenditApiKey, bool debug = false}) {
     xendit = XenditHttpRequest.init(
       "Basic ${base64.encode(utf8.encode("$xenditApiKey:"))}",
@@ -18,6 +24,12 @@ class Sucrose {
   }
 
   /// Initialize Midtrans with Midtrans API key
+  ///
+  /// `midtransApiKey` is your Midtrans API key
+  ///
+  /// `environment` is your Midtrans environment, either `MidtransEnvironment.SANDBOX` or `MidtransEnvironment.PRODUCTION`
+  ///
+  /// `debug` is whether you want to print debug log or not
   Sucrose.initMidtrans({
     required String midtransApiKey,
     required MidtransEnvironment environment,
