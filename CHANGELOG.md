@@ -42,3 +42,14 @@
 
 * Adding Midtrans Payment Gateway.
 * Fix minor bug.
+
+## 0.0.4+1
+
+
+* Fix missing file on `midtrans_model.dart`.
+
+
+## 0.0.5
+
+* Adding register card to get `saved_token_id` and other stuff.
+* Adding cardless payments like `Akulaku` and `Kredivo`.
